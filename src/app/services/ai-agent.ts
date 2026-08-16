@@ -1,4 +1,5 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -13,26 +14,37 @@ import {
 export class AIAgentService {
 
   private readonly http = inject(HttpClient);
-
-  // ==========================================================
-  // PRODUCTION API
-  // ==========================================================
+  private readonly platformId = inject(PLATFORM_ID);
 
   private readonly apiUrl =
     'https://protfolio-2-e7t3.onrender.com/api/chat';
 
-  // ==========================================================
-  // SEND MESSAGE
-  // ==========================================================
+  private getOrCreateThreadId(): string {
+
+    // Server / SSR
+    if (!isPlatformBrowser(this.platformId)) {
+      return 'ssr-session';
+    }
+
+    // Browser
+    let threadId = localStorage.getItem('thread_id');
+
+    if (!threadId) {
+      threadId = crypto.randomUUID();
+      localStorage.setItem('thread_id', threadId);
+    }
+
+    return threadId;
+  }
 
   sendMessage(
     message: string,
-    threadId: string
+    threadId?: string
   ): Observable<ChatResponse> {
 
     const request: ChatRequest = {
-      message: message,
-      thread_id: threadId
+      message,
+      thread_id: threadId || this.getOrCreateThreadId()
     };
 
     return this.http.post<ChatResponse>(
