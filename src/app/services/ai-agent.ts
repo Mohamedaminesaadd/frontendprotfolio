@@ -14,8 +14,16 @@ export class AIAgentService {
 
   private readonly http = inject(HttpClient);
 
+  // ==========================================================
+  // PRODUCTION API
+  // ==========================================================
+
   private readonly apiUrl =
-    'http://localhost:8080/api/chat';
+    'https://protfolio-2-e7t3.onrender.com/api/chat';
+
+  // ==========================================================
+  // SEND MESSAGE
+  // ==========================================================
 
   sendMessage(
     message: string,
