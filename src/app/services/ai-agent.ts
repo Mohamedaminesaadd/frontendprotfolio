@@ -17,7 +17,7 @@ export class AIAgentService {
   private readonly platformId = inject(PLATFORM_ID);
 
   private readonly apiUrl =
-    'https://tell-ralph-caps-ladder.trycloudflare.com/api/cht';
+    'https://tell-ralph-caps-ladder.trycloudflare.com/api/chat';
 
   private getOrCreateThreadId(): string {
 
