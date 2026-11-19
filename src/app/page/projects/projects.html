@@ -4,22 +4,22 @@
     <p class="section-eyebrow"><span class="step active">3</span> Projects</p>
     <h2 class="section-title">What I build</h2>
     <p class="section-description">
-      What I'm building now, what I've shipped, and what I'm learning.
+      What I've shipped, and what I'm learning.
     </p>
   </div>
 
 
   <!-- ==========================================
-       CURRENTLY WORKING ON
+       FLAGSHIP PROJECT
   =========================================== -->
 
-  <div class="project-group" aria-labelledby="group-current">
+  <div class="project-group" aria-labelledby="group-flagship">
     <div class="group-heading">
-      <h3 id="group-current">Currently Working On</h3>
+      <h3 id="group-flagship">Flagship Project</h3>
     </div>
 
     <div class="projects-grid single">
-      @for (project of current; track project.id) {
+      @for (project of flagship; track project.id) {
         <app-project-cart [project]="project" variant="wide"></app-project-cart>
       }
     </div>

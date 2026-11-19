@@ -1,13 +1,18 @@
 /* =========================================================
-   DESIGN SYSTEM — dark space theme
+   DESIGN SYSTEM — night sky: deep navy + blue + white + subtle violet
    Background: "Pure CSS Parallax Pixel Stars" (radial #1B2735 → #090A0F,
    three layers of white pixel stars drifting upward — app-star-field).
    Kept from the earlier direction (Atakan Goktepe's multi-step form):
-   - "fieldset" cards — now slightly lighter navy surfaces with a hairline
+   - "fieldset" cards — slightly lighter navy surfaces with a hairline
    - Montserrat, uppercase titles + muted subtitles
-   - flat red actions with a gap focus ring
+   - flat blue (#4568A8) actions with a gap focus ring
    - numbered square steps joined by a line (progress bar)
+   Palette: deep navy #1B2735 · space #090A0F · blue #4568A8 ·
+   soft blue #8FAFD6 · light sky #F3F6FA · white · neutral gray ·
+   subtle violet. Green is kept only as the semantic "completed" color.
    Token rule: *-strong = FILL (white text on it), *-text = TEXT color.
+   Historic names: --primary* is now BLUE, --orange* is SKY BLUE,
+   --purple* is the subtle VIOLET, --navy is the main text color.
 
    THEMES — <html data-theme="dark|light">, set before first paint by the
    inline script in index.html and toggled by ThemeService.
@@ -49,28 +54,30 @@
   --green-soft: rgba(39, 174, 96, 0.14);
   --green-border: rgba(39, 174, 96, 0.4);
 
-  /* Primary — red (#ED5565 family) */
-  --primary: #ed5565;
-  --primary-strong: #cc3344;
-  --primary-hover: #b52d3c;
-  --primary-text: #f27a87;
-  --primary-soft: rgba(237, 85, 101, 0.14);
-  --primary-border: rgba(237, 85, 101, 0.45);
+  /* Primary — blue (#4568A8 family); white on #4568A8 = 5.5:1 */
+  --primary: #6f93d4;
+  --primary-strong: #4568a8;
+  --primary-hover: #3a5a94;
+  --primary-text: #8fafd6;
+  --primary-soft: rgba(69, 104, 168, 0.2);
+  --primary-border: rgba(143, 175, 214, 0.45);
 
   /* Footer — charcoal, matches the night sky */
   --footer-charcoal: #0c1017;
 
-  --orange: #e08a2c;
-  --orange-strong: #a04f00;
-  --orange-text: #f2aa62;
-  --orange-soft: rgba(224, 138, 44, 0.14);
-  --orange-border: rgba(224, 138, 44, 0.4);
+  /* Sky blue (historic name "orange") — the lighter, cooler blue */
+  --orange: #6fa8dc;
+  --orange-strong: #2d6a96;
+  --orange-text: #9cc8ec;
+  --orange-soft: rgba(111, 168, 220, 0.14);
+  --orange-border: rgba(111, 168, 220, 0.4);
 
-  --purple: #9b59b6;
-  --purple-strong: #7d3c98;
-  --purple-text: #c9a3dc;
-  --purple-soft: rgba(155, 89, 182, 0.16);
-  --purple-border: rgba(155, 89, 182, 0.45);
+  /* Subtle violet — secondary accent */
+  --purple: #8e7cc3;
+  --purple-strong: #6a59a8;
+  --purple-text: #bcb0ea;
+  --purple-soft: rgba(142, 124, 195, 0.16);
+  --purple-border: rgba(142, 124, 195, 0.45);
 
   /* Backwards-compatible aliases used by components */
   --accent: var(--primary-strong);
@@ -85,8 +92,8 @@
   --amber-border: var(--orange-border);
 
   /* Code tokens */
-  --code-keyword: #f2aa62;
-  --code-variable: #c9a3dc;
+  --code-keyword: #8fafd6;
+  --code-variable: #bcb0ea;
   --code-string: #63d391;
   --code-property: #e8edf3;
 
@@ -98,7 +105,8 @@
 
   /* Misc. component roles */
   --btn-secondary-bg: rgba(148, 163, 184, 0.06);
-  --selection-bg: rgba(237, 85, 101, 0.4);
+  --selection-bg: rgba(69, 104, 168, 0.5);
+  --highlight-mark: rgba(143, 175, 214, 0.28);   /* text marker (hero status) */
   --selection-fg: #ffffff;
   --danger: #e0564a;
   --danger-text: #f5a59c;
@@ -128,7 +136,7 @@
   --shadow: 0 0 0 1px var(--border), 0 12px 32px rgba(0, 0, 0, 0.38);
   --shadow-lift: 0 0 0 1px rgba(143, 163, 191, 0.34), 0 18px 44px rgba(0, 0, 0, 0.5);
 
-  /* Focus ring: gap in the surface color, then red */
+  /* Focus ring: gap in the surface color, then blue */
   --ring: 0 0 0 2px var(--ring-gap), 0 0 0 3px var(--primary);
 
   /* Type */
@@ -138,82 +146,88 @@
 
 
 /* ---------------------------------------------------------
-   LIGHT THEME — daylight sky, white cards, colored stars,
-   red bubble footer (the earlier light design)
+   LIGHT THEME — daylight sky (#F3F6FA), white cards, navy text,
+   blue / navy / violet stars, deep-navy bubble footer.
+   Designed as the night sky's daytime counterpart, not an inversion:
+   same hues, deep navy becomes the ink instead of the backdrop.
 --------------------------------------------------------- */
 
 :root[data-theme="light"] {
   color-scheme: light;
 
-  --space-deep: #f7f9fc;
-  --space-navy: #e6ecf4;
+  --space-deep: #f3f6fa;
+  --space-navy: #dde6f2;
 
   --bg: #ffffff;
-  --bg-subtle: #f7f8fa;
-  --bg-muted: #eef0f3;
+  --bg-subtle: #f5f8fc;
+  --bg-muted: #e9eef5;
   --bg-input: #ffffff;
-  --ink: #2c3e50;
+  --ink: #1b2735;
 
-  --border: #e3e6ea;
-  --border-strong: #cccccc;
+  --border: #dfe6ef;
+  --border-strong: #c2cddc;
 
-  --navy: #2c3e50;
-  --text: #2c3e50;
-  --text-2: #4a5866;
-  --text-3: #666666;
-  --slate: #2c3e50;
+  /* Text — deep navy + neutral grays (AA on white) */
+  --navy: #1b2735;
+  --text: #1b2735;
+  --text-2: #445366;
+  --text-3: #5f6b7a;
+  --slate: #33465e;
 
   --green-text: #1e8449;
   --green-soft: #eaf7ef;
   --green-border: #a9dfbf;
 
-  --primary-text: #cc3344;
-  --primary-soft: #fdecee;
-  --primary-border: #f5b7bf;
+  --primary: #4568a8;
+  --primary-text: #3a5a98;
+  --primary-soft: #e9eff8;
+  --primary-border: #b8c8e4;
 
-  --orange: #c46600;
-  --orange-text: #a04f00;
-  --orange-soft: #fdf1e5;
-  --orange-border: #f3c99c;
+  --orange: #3b82b6;
+  --orange-text: #23628f;
+  --orange-soft: #e7f1f9;
+  --orange-border: #b5d3ea;
 
-  --purple-text: #7d3c98;
-  --purple-soft: #f6eff9;
-  --purple-border: #d7bde2;
+  --purple: #7a68b8;
+  --purple-text: #5b4a9e;
+  --purple-soft: #f1eefa;
+  --purple-border: #d3cbed;
 
-  --code-keyword: #a04f00;
-  --code-variable: #7d3c98;
+  --code-keyword: #3a5a98;
+  --code-variable: #5b4a9e;
   --code-string: #1e8449;
-  --code-property: #2c3e50;
+  --code-property: #1b2735;
 
-  --tone-navy-fill: #2c3e50;
-  --tone-navy-text: #2c3e50;
-  --tone-navy-soft: #eef1f4;
-  --tone-navy-border: #c9d1d9;
+  --tone-navy-fill: #1b2735;
+  --tone-navy-text: #1b2735;
+  --tone-navy-soft: #edf1f6;
+  --tone-navy-border: #c7d1de;
 
-  --shadow-sm: 0 0 0 1px rgba(44, 62, 80, 0.04), 0 1px 3px rgba(44, 62, 80, 0.08);
-  --shadow: 0 0 15px 1px rgba(44, 62, 80, 0.13);
-  --shadow-lift: 0 0 22px 2px rgba(44, 62, 80, 0.2);
+  --shadow-sm: 0 0 0 1px rgba(27, 39, 53, 0.04), 0 1px 3px rgba(27, 39, 53, 0.08);
+  --shadow: 0 0 0 1px rgba(27, 39, 53, 0.04), 0 8px 24px rgba(27, 39, 53, 0.09);
+  --shadow-lift: 0 0 0 1px rgba(69, 104, 168, 0.16), 0 14px 34px rgba(27, 39, 53, 0.14);
 
   --btn-secondary-bg: #ffffff;
-  --selection-bg: var(--primary-soft);
+  --selection-bg: #cfdcf0;
   --selection-fg: var(--navy);
+  --highlight-mark: rgba(69, 104, 168, 0.2);
   --danger: #c0392b;
   --danger-text: #922b21;
   --danger-soft: #fdedec;
   --danger-border: #e6b0aa;
-  --media-shadow: 0 0 15px 1px rgba(44, 62, 80, 0.18);
-  --hover-shadow: 0 0 12px rgba(44, 62, 80, 0.1);
+  --media-shadow: 0 0 15px 1px rgba(27, 39, 53, 0.16);
+  --hover-shadow: 0 0 12px rgba(27, 39, 53, 0.1);
 
-  /* Red gooey footer — #CC3344 keeps white text at AA contrast */
-  --footer-bg: #cc3344;
-  --footer-rim: transparent;
-  --footer-glow: transparent;
+  /* Deep-navy gooey footer with a soft blue halo (white text = 14.6:1) */
+  --footer-bg: #1b2735;
+  --footer-rim: rgba(69, 104, 168, 0.45);
+  --footer-glow: rgba(69, 104, 168, 0.22);
   --footer-heading: #ffffff;
-  --footer-link: #ffffff;
-  --footer-muted: rgba(255, 255, 255, 0.88);
-  --footer-mark-border: #ffffff;
-  --footer-mark-hover-bg: #ffffff;
-  --footer-mark-hover-fg: #cc3344;
+  --footer-link: #d5e0ee;
+  --footer-muted: #a9b9cd;
+  --footer-mark-border: #8fafd6;
+  --footer-mark-hover-bg: #8fafd6;
+  --footer-mark-hover-fg: #1b2735;
 }
 
 /* Theme switch: freeze transitions so the circular reveal is clean */
@@ -558,8 +572,8 @@ a {
 
 /* --tone-strong is a FILL (white icon on it); --tone-text is for text on dark */
 .tone-green  { --tone: var(--green);   --tone-strong: var(--green-strong);   --tone-text: var(--green-text);   --tone-soft: var(--green-soft);   --tone-border: var(--green-border); }
-.tone-red    { --tone: var(--primary); --tone-strong: var(--primary-strong); --tone-text: var(--primary-text); --tone-soft: var(--primary-soft); --tone-border: var(--primary-border); }
-.tone-orange { --tone: var(--orange);  --tone-strong: var(--orange-strong);  --tone-text: var(--orange-text);  --tone-soft: var(--orange-soft);  --tone-border: var(--orange-border); }
+.tone-blue   { --tone: var(--primary); --tone-strong: var(--primary-strong); --tone-text: var(--primary-text); --tone-soft: var(--primary-soft); --tone-border: var(--primary-border); }
+.tone-sky    { --tone: var(--orange);  --tone-strong: var(--orange-strong);  --tone-text: var(--orange-text);  --tone-soft: var(--orange-soft);  --tone-border: var(--orange-border); }
 .tone-purple { --tone: var(--purple);  --tone-strong: var(--purple-strong);  --tone-text: var(--purple-text);  --tone-soft: var(--purple-soft);  --tone-border: var(--purple-border); }
 .tone-navy   { --tone: var(--slate);   --tone-strong: var(--tone-navy-fill); --tone-text: var(--tone-navy-text); --tone-soft: var(--tone-navy-soft); --tone-border: var(--tone-navy-border); }
 

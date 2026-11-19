@@ -223,7 +223,7 @@
 
 
 /* =========================================================
-   WIDE — EVA-Guard with its roadmap progress bar
+   WIDE — EVA-Guard: step bar (its pipeline) + detail columns
 ========================================================= */
 
 .project-card.wide {
@@ -403,6 +403,51 @@
 }
 
 
+/* Detail columns span the whole card under the summary + step bar */
+.project-card.wide.has-details .project-progress {
+  justify-content: center;
+}
+
+.project-details {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+/* One accent per column, all from the palette: blue, violet, navy */
+.detail-block {
+  --detail-soft: var(--primary-soft);
+  --detail-text: var(--primary-text);
+  --detail-fill: var(--primary-strong);
+  background: var(--detail-soft);
+}
+
+.detail-block:nth-child(2) {
+  --detail-soft: var(--purple-soft);
+  --detail-text: var(--purple-text);
+  --detail-fill: var(--purple-strong);
+}
+
+.detail-block:nth-child(3) {
+  --detail-soft: var(--tone-navy-soft);
+  --detail-text: var(--tone-navy-text);
+  --detail-fill: var(--tone-navy-fill);
+}
+
+.detail-block h5 {
+  color: var(--detail-text);
+}
+
+.detail-block li {
+  color: var(--navy);
+}
+
+.detail-block li::before {
+  background: var(--detail-fill);
+}
+
+
 /* =========================================================
    COMPACT
 ========================================================= */
@@ -445,6 +490,12 @@
   .project-card.wide {
     grid-template-columns: 1fr;
     gap: 24px;
+  }
+}
+
+@media (max-width: 760px) {
+  .project-details {
+    grid-template-columns: 1fr;
   }
 }
 

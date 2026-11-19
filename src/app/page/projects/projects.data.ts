@@ -7,9 +7,9 @@
 
 export type ProjectStatus = 'completed' | 'in-progress' | 'learning';
 
-export type ProjectGroup = 'current' | 'featured' | 'other' | 'learning';
+export type ProjectGroup = 'flagship' | 'featured' | 'other' | 'learning';
 
-export type ProjectTone = 'red' | 'green' | 'orange' | 'purple' | 'navy';
+export type ProjectTone = 'blue' | 'green' | 'sky' | 'purple' | 'navy';
 
 export interface ProjectVideo {
   src: string;
@@ -17,6 +17,11 @@ export interface ProjectVideo {
   caption: string;
   width: number;
   height: number;
+}
+
+export interface ProjectDetail {
+  heading: string;
+  items: string[];
 }
 
 export interface RoadmapStep {
@@ -46,8 +51,13 @@ export interface Project {
   /** Future objectives — shown separately, never as done. */
   planned?: string[];
 
-  /** Phase progress bar (EVA-Guard), following the project's own docs. */
+  /** Step bar on the wide card (EVA-Guard: its monitoring pipeline). */
   roadmap?: RoadmapStep[];
+  /** Accessible name of the step bar. */
+  roadmapLabel?: string;
+
+  /** Wide card: titled columns (replaces the built / planned columns). */
+  details?: ProjectDetail[];
 
   tags: string[];
   codeUrl: string;
@@ -60,38 +70,54 @@ const GH = 'https://github.com/Mohamedaminesaadd';
 
 export const PROJECTS: Project[] = [
 
-  /* ---------------- CURRENTLY WORKING ON ---------------- */
+  /* ---------------- FLAGSHIP ---------------- */
 
   {
     id: 'eva-guard',
-    group: 'current',
-    tone: 'orange',
+    group: 'flagship',
+    tone: 'navy',
     fileName: 'monitoring-rust/src/main.rs',
     fileIcon: 'simple-icons:rust',
     title: 'EVA-Guard',
-    context: 'Ethereum node security monitoring',
-    status: 'in-progress',
-    statusLabel: 'In progress',
+    context: 'Ethereum node security monitoring · Rust',
+    status: 'completed',
+    statusLabel: 'Completed',
     summary:
-      'Detects and investigates attacks on Ethereum nodes. Phase 1, the Rust monitoring engine, is built.',
-    highlights: [
-      'Geth JSON-RPC client (Rust, Tokio)',
-      '5 collectors: chain, P2P, RPC, network, system',
-      'Scheduled snapshots stored as JSON Lines',
-      'Tested against a local Geth node'
-    ],
-    planned: [
-      'Anomaly detection',
-      'LLM-generated attack hypotheses',
-      'Multi-evidence attack confirmation'
-    ],
+      'A Rust monitoring engine for Geth Ethereum nodes. It polls the node over JSON-RPC and records security-related observations — peer churn, RPC health, sync state and host load — as a stable dataset for attack analysis.',
+    roadmapLabel: 'Monitoring pipeline',
     roadmap: [
-      { label: 'Monitoring', done: true },
-      { label: 'Anomaly detection', done: false },
-      { label: 'Attack hypotheses', done: false },
-      { label: 'Confirmation', done: false }
+      { label: 'Geth JSON-RPC', done: true },
+      { label: '5 collectors', done: true },
+      { label: 'Fault-tolerant scheduler', done: true },
+      { label: 'JSONL observations', done: true }
     ],
-    tags: ['Rust', 'Tokio', 'Geth', 'Ethereum'],
+    details: [
+      {
+        heading: 'Monitoring engine',
+        items: [
+          'Async Geth JSON-RPC client (Tokio, reqwest)',
+          'Chain, P2P, RPC, network and system collectors',
+          'Keeps running when Geth is down; missing data is null, never 0'
+        ]
+      },
+      {
+        heading: 'Attack-relevant signals',
+        items: [
+          'Peer churn: new vs. disconnected peers per cycle',
+          'RPC availability and latency, sync state',
+          'Host traffic, TCP connections, CPU and memory'
+        ]
+      },
+      {
+        heading: 'Validation',
+        items: [
+          'Integration tests against a mock Geth node',
+          'Timeouts, malformed replies, full peer rotation',
+          'Run against a local Geth node'
+        ]
+      }
+    ],
+    tags: ['Rust', 'Tokio', 'Geth', 'Ethereum', 'JSON-RPC'],
     codeUrl: `${GH}/EVA-Guard_Project`
   },
 
@@ -143,7 +169,7 @@ export const PROJECTS: Project[] = [
   {
     id: 'pv-platform',
     group: 'featured',
-    tone: 'red',
+    tone: 'blue',
     fileName: 'pv-manager/Frontend/src/app',
     fileIcon: 'mdi:solar-panel',
     title: 'Photovoltaic Management Platform',
@@ -188,7 +214,7 @@ export const PROJECTS: Project[] = [
   {
     id: 'invoice',
     group: 'other',
-    tone: 'red',
+    tone: 'blue',
     fileName: 'facture_data/main.py',
     fileIcon: 'mdi:file-document-outline',
     title: 'Invoice Data Extraction AI',
@@ -233,7 +259,7 @@ export const PROJECTS: Project[] = [
   {
     id: 'blockchain-lab',
     group: 'learning',
-    tone: 'orange',
+    tone: 'sky',
     fileName: 'bitcoin_core.md',
     fileIcon: 'mdi:link-variant',
     title: 'Blockchain Laboratory',
@@ -247,7 +273,7 @@ export const PROJECTS: Project[] = [
   {
     id: 'agent-lab',
     group: 'learning',
-    tone: 'red',
+    tone: 'blue',
     fileName: 'task_19_supervisor.py',
     fileIcon: 'mdi:robot-outline',
     title: 'AI Agents Lab',

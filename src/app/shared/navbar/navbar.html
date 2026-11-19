@@ -33,37 +33,63 @@
     <span class="nav-label">AI chat</span>
   </a>
 
-  <!-- Light / dark switch. Icon + label follow <html data-theme> via CSS,
-       so they are right before hydration (no flash). -->
+  <!-- Light / dark switch: pill track with a sun (left) and a moon (right);
+       the knob slides onto the active one and morphs sun ↔ moon.
+       Position, icon and label follow <html data-theme> via CSS, so they are
+       right before hydration (no flash). -->
   <button
     #themeButton
     type="button"
+    role="switch"
     class="nav-theme"
     aria-label="Dark mode"
-    [attr.aria-pressed]="theme.theme() === 'dark'"
+    [attr.aria-checked]="theme.theme() === 'dark'"
     [attr.title]="theme.theme() === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'"
     (click)="theme.toggle(themeButton)"
   >
-    <span class="theme-tile">
-      <svg class="theme-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-        <mask id="theme-icon-moon">
-          <rect width="24" height="24" fill="#fff" />
-          <circle class="moon-cut" cx="18" cy="7" r="6.5" fill="#000" />
-        </mask>
-        <circle class="sun-core" cx="12" cy="12" r="5" fill="currentColor" mask="url(#theme-icon-moon)" />
-        <g class="sun-rays" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-          <line x1="12" y1="1.5" x2="12" y2="3.5" />
-          <line x1="12" y1="20.5" x2="12" y2="22.5" />
-          <line x1="1.5" y1="12" x2="3.5" y2="12" />
-          <line x1="20.5" y1="12" x2="22.5" y2="12" />
-          <line x1="4.6" y1="4.6" x2="6" y2="6" />
-          <line x1="18" y1="18" x2="19.4" y2="19.4" />
-          <line x1="4.6" y1="19.4" x2="6" y2="18" />
-          <line x1="18" y1="6" x2="19.4" y2="4.6" />
+    <span class="theme-switch" aria-hidden="true">
+
+      <!-- Track hints -->
+      <svg class="track-icon track-sun" viewBox="0 0 24 24" focusable="false">
+        <circle cx="12" cy="12" r="4.5" fill="currentColor" />
+        <g stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+          <line x1="12" y1="2" x2="12" y2="4" />
+          <line x1="12" y1="20" x2="12" y2="22" />
+          <line x1="2" y1="12" x2="4" y2="12" />
+          <line x1="20" y1="12" x2="22" y2="12" />
+          <line x1="4.9" y1="4.9" x2="6.3" y2="6.3" />
+          <line x1="17.7" y1="17.7" x2="19.1" y2="19.1" />
+          <line x1="4.9" y1="19.1" x2="6.3" y2="17.7" />
+          <line x1="17.7" y1="6.3" x2="19.1" y2="4.9" />
         </g>
       </svg>
+      <svg class="track-icon track-moon" viewBox="0 0 24 24" focusable="false">
+        <path fill="currentColor" d="M20.5 14.6A8.5 8.5 0 0 1 9.4 3.5a8.5 8.5 0 1 0 11.1 11.1Z" />
+      </svg>
+
+      <!-- Sliding knob with the morphing icon -->
+      <span class="switch-thumb">
+        <svg class="theme-icon" viewBox="0 0 24 24" focusable="false">
+          <mask id="theme-icon-moon">
+            <rect width="24" height="24" fill="#fff" />
+            <circle class="moon-cut" cx="18" cy="7" r="6.5" fill="#000" />
+          </mask>
+          <circle class="sun-core" cx="12" cy="12" r="5" fill="currentColor" mask="url(#theme-icon-moon)" />
+          <g class="sun-rays" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <line x1="12" y1="1.5" x2="12" y2="3.5" />
+            <line x1="12" y1="20.5" x2="12" y2="22.5" />
+            <line x1="1.5" y1="12" x2="3.5" y2="12" />
+            <line x1="20.5" y1="12" x2="22.5" y2="12" />
+            <line x1="4.6" y1="4.6" x2="6" y2="6" />
+            <line x1="18" y1="18" x2="19.4" y2="19.4" />
+            <line x1="4.6" y1="19.4" x2="6" y2="18" />
+            <line x1="18" y1="6" x2="19.4" y2="4.6" />
+          </g>
+        </svg>
+      </span>
+
     </span>
-    <span class="nav-label">
+    <span class="nav-label" aria-hidden="true">
       <span class="label-dark">Dark</span>
       <span class="label-light">Light</span>
     </span>

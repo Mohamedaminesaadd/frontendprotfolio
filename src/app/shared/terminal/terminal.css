@@ -112,7 +112,7 @@
 .status-text {
   padding: 0 2px;
   color: var(--navy);
-  background: linear-gradient(transparent 56%, rgba(237, 85, 101, 0.22) 56%);
+  background: linear-gradient(transparent 56%, var(--highlight-mark) 56%);
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
 }
@@ -191,6 +191,11 @@
 
   .profile-actions .btn {
     flex: 1;
+  }
+
+  /* CV download gets its own full-width row on phones */
+  .profile-actions .btn-primary {
+    flex-basis: 100%;
   }
 
   .profile-links {

@@ -8,7 +8,7 @@ interface Bubble {
 /**
  * Gooey "bubbles" footer.
  * Bubbles rise from the footer edge; an SVG blur + alpha-threshold
- * filter (#footer-blob) merges them into the red band.
+ * filter (#footer-blob) merges them into the footer band.
  *
  * Bubble values come from a seeded PRNG so the server-rendered HTML
  * and the browser render are identical (no hydration mismatch).

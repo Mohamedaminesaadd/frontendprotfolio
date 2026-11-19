@@ -201,15 +201,17 @@
 
 
 /* =========================================
-   THEME SWITCH — sun ↔ moon morph
-   Dark (default): crescent moon. Light: sun with rays.
+   THEME SWITCH — sun / moon pill
+   Track: sun hint on the left, moon hint on the right.
+   Knob: slides right + crescent moon in dark (default),
+         slides left + sun with rays in light.
    ========================================= */
 
 .nav-theme {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 3px;
+  gap: 4px;
 
   margin: 0;
   padding: 0;
@@ -219,40 +221,117 @@
   color: var(--text-3);
   font: inherit;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .nav-theme:focus-visible {
   box-shadow: none;
 }
 
-.theme-tile {
-  display: grid;
-  place-items: center;
-  width: 30px;
-  height: 30px;
-
-  border-radius: var(--radius-sm);
-  background: var(--bg-subtle);
-  box-shadow: 0 0 0 1px var(--border-strong);
-  color: var(--text);
-
-  transition:
-    box-shadow 0.2s ease,
-    color 0.3s ease;
-}
-
-.nav-theme:hover .theme-tile,
-.nav-theme:focus-visible .theme-tile {
-  box-shadow: 0 0 0 2px var(--ring-gap), 0 0 0 3px var(--primary);
-}
-
 .nav-theme:hover {
   color: var(--navy);
 }
 
+.theme-switch {
+  --switch-w: 54px;
+  --switch-h: 28px;
+  --switch-pad: 3px;
+  --thumb: calc(var(--switch-h) - 2 * var(--switch-pad));
+
+  position: relative;
+  display: block;
+  width: var(--switch-w);
+  height: var(--switch-h);
+  flex: 0 0 auto;
+
+  border-radius: 999px;
+  /* Night track: deep navy sky with two tiny stars */
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.7) 0 0.6px, transparent 1.2px),
+    radial-gradient(circle at 22% 72%, rgba(255, 255, 255, 0.5) 0 0.5px, transparent 1px),
+    linear-gradient(135deg, #1b2735 0%, #2a3a63 100%);
+  box-shadow:
+    inset 0 1px 3px rgba(0, 0, 0, 0.45),
+    0 0 0 1px var(--border-strong);
+
+  transition:
+    background 0.4s ease,
+    box-shadow 0.2s ease;
+}
+
+.nav-theme:focus-visible .theme-switch {
+  box-shadow:
+    inset 0 1px 3px rgba(0, 0, 0, 0.45),
+    0 0 0 2px var(--ring-gap),
+    0 0 0 3px var(--primary);
+}
+
+/* Hover ring only on devices that really hover (no sticky ring after a tap) */
+@media (hover: hover) {
+  .nav-theme:hover .theme-switch {
+    box-shadow:
+      inset 0 1px 3px rgba(0, 0, 0, 0.45),
+      0 0 0 2px var(--ring-gap),
+      0 0 0 3px var(--primary);
+  }
+
+  :host-context([data-theme="light"]) .nav-theme:hover .theme-switch {
+    box-shadow:
+      inset 0 1px 3px rgba(27, 39, 53, 0.18),
+      0 0 0 2px var(--ring-gap),
+      0 0 0 3px var(--primary);
+  }
+}
+
+.track-icon {
+  position: absolute;
+  top: 50%;
+  width: 13px;
+  height: 13px;
+  transform: translateY(-50%);
+  transition: opacity 0.3s ease, color 0.3s ease;
+}
+
+.track-sun {
+  left: 7px;
+  color: #f2c14e;
+  opacity: 0.75;
+}
+
+.track-moon {
+  right: 7px;
+  color: #c8d6ec;
+  opacity: 0.35;
+}
+
+.switch-thumb {
+  position: absolute;
+  top: var(--switch-pad);
+  left: var(--switch-pad);
+  z-index: 1;
+
+  display: grid;
+  place-items: center;
+  width: var(--thumb);
+  height: var(--thumb);
+
+  border-radius: 50%;
+  background: linear-gradient(145deg, #3b4f78 0%, #24324d 100%);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  color: #e8edf8;
+
+  /* Dark (default): knob on the moon side */
+  transform: translateX(calc(var(--switch-w) - var(--thumb) - 2 * var(--switch-pad)));
+
+  transition:
+    transform 0.45s cubic-bezier(0.5, 1.35, 0.45, 1),
+    background 0.4s ease,
+    color 0.4s ease;
+}
+
 .theme-icon {
-  width: 18px;
-  height: 18px;
+  width: 14px;
+  height: 14px;
   overflow: visible;
 }
 
@@ -283,9 +362,36 @@
   display: none;
 }
 
-/* Light = sun: small disc, bite moved away, rays out */
-:host-context([data-theme="light"]) .theme-tile {
-  color: var(--orange);
+/* ---- Light = sun: day-sky track, knob slides left, sun with rays ---- */
+
+:host-context([data-theme="light"]) .theme-switch {
+  background: linear-gradient(135deg, #cfe0f5 0%, #8fafd6 100%);
+  box-shadow:
+    inset 0 1px 3px rgba(27, 39, 53, 0.18),
+    0 0 0 1px var(--border-strong);
+}
+
+:host-context([data-theme="light"]) .nav-theme:focus-visible .theme-switch {
+  box-shadow:
+    inset 0 1px 3px rgba(27, 39, 53, 0.18),
+    0 0 0 2px var(--ring-gap),
+    0 0 0 3px var(--primary);
+}
+
+:host-context([data-theme="light"]) .track-sun {
+  opacity: 0;
+}
+
+:host-context([data-theme="light"]) .track-moon {
+  color: #1b2735;
+  opacity: 0.55;
+}
+
+:host-context([data-theme="light"]) .switch-thumb {
+  transform: translateX(0);
+  background: linear-gradient(145deg, #ffffff 0%, #f3f6fa 100%);
+  box-shadow: 0 2px 5px rgba(27, 39, 53, 0.25);
+  color: #e9a92e;
 }
 
 :host-context([data-theme="light"]) .sun-core {
@@ -393,14 +499,28 @@
     border-left: 1px solid var(--border);
   }
 
-  .theme-tile {
-    width: 22px;
-    height: 22px;
+  .theme-switch {
+    --switch-w: 42px;
+    --switch-h: 22px;
+    --switch-pad: 2px;
+  }
+
+  .track-icon {
+    width: 10px;
+    height: 10px;
+  }
+
+  .track-sun {
+    left: 5px;
+  }
+
+  .track-moon {
+    right: 5px;
   }
 
   .theme-icon {
-    width: 14px;
-    height: 14px;
+    width: 11px;
+    height: 11px;
   }
 }
 
@@ -411,7 +531,9 @@
   .sun-core,
   .sun-rays,
   .moon-cut,
-  .theme-tile {
+  .theme-switch,
+  .switch-thumb,
+  .track-icon {
     transition: none !important;
   }
 }

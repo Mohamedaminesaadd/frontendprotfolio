@@ -6,7 +6,7 @@ import { Project } from '../../page/projects/projects.data';
  * Project card — keeps the original "code window" look
  * (traffic-light dots + file name header).
  *
- *  - wide:    full-width card with "built" vs "next steps" (EVA-Guard)
+ *  - wide:    full-width card with a step bar + titled detail columns (EVA-Guard)
  *  - large:   featured project, highlights + optional demo video
  *  - compact: smaller card for secondary / learning projects
  */

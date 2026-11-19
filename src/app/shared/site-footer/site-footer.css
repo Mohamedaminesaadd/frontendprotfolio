@@ -6,7 +6,7 @@
 
 .footer {
   /* Colors come from the theme tokens (styles.css):
-     dark = charcoal "fire" with a blue-gray rim, light = red bubbles */
+     dark = charcoal "fire" with a blue-gray rim, light = deep-navy bubbles with a blue halo */
   --footer-background: var(--footer-bg);
 
   position: relative;

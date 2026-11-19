@@ -6,29 +6,30 @@
   pointer-events: none;
   background: radial-gradient(ellipse at bottom, var(--space-navy) 0%, var(--space-deep) 100%);
 
-  /* Night: white stars, a few brightness levels, a hint of blue-gray */
+  /* Night: white stars, a few brightness levels, faint soft-blue and
+     violet glints (the site accents) — still a white night sky */
   --star-s1: rgba(255, 255, 255, 0.55);
   --star-s2: rgba(255, 255, 255, 0.8);
-  --star-s3: rgba(200, 214, 235, 0.5);
+  --star-s3: rgba(143, 175, 214, 0.55);
   --star-m1: rgba(255, 255, 255, 0.75);
   --star-m2: rgba(255, 255, 255, 0.95);
-  --star-m3: rgba(190, 206, 230, 0.7);
+  --star-m3: rgba(188, 176, 234, 0.6);
   --star-b1: #ffffff;
   --star-b2: rgba(255, 255, 255, 0.85);
   --star-b3: rgba(214, 226, 243, 0.9);
 }
 
-/* Day: soft stars in the site palette (red, navy, purple, amber) */
+/* Day: soft stars in the site palette (blue, navy, violet, soft blue) */
 :host-context([data-theme="light"]) {
-  --star-s1: rgba(237, 85, 101, 0.5);
-  --star-s2: rgba(44, 62, 80, 0.28);
-  --star-s3: rgba(237, 85, 101, 0.35);
-  --star-m1: rgba(237, 85, 101, 0.5);
-  --star-m2: rgba(155, 89, 182, 0.38);
-  --star-m3: rgba(44, 62, 80, 0.28);
-  --star-b1: rgba(204, 51, 68, 0.5);
-  --star-b2: rgba(237, 85, 101, 0.42);
-  --star-b3: rgba(196, 102, 0, 0.38);
+  --star-s1: rgba(69, 104, 168, 0.5);
+  --star-s2: rgba(27, 39, 53, 0.28);
+  --star-s3: rgba(122, 104, 184, 0.4);
+  --star-m1: rgba(69, 104, 168, 0.5);
+  --star-m2: rgba(122, 104, 184, 0.4);
+  --star-m3: rgba(27, 39, 53, 0.28);
+  --star-b1: rgba(69, 104, 168, 0.55);
+  --star-b2: rgba(111, 147, 212, 0.55);
+  --star-b3: rgba(122, 104, 184, 0.45);
 }
 
 .star-field {

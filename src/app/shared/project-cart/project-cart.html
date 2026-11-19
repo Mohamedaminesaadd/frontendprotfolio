@@ -1,6 +1,7 @@
 <article
   [class]="'project-card card tone-' + project.tone + ' ' + variant"
   [class.has-video]="!!project.video"
+  [class.has-details]="!!project.details?.length"
   [attr.aria-labelledby]="project.id + '-title'"
 >
 
@@ -71,12 +72,12 @@
   }
 
 
-  <!-- Roadmap progress bar (EVA-Guard) -->
+  <!-- Wide card (EVA-Guard): step bar + titled columns -->
   @if (variant === 'wide') {
     <div class="project-progress">
 
       @if (project.roadmap?.length) {
-        <ol class="roadmap" aria-label="Project phases">
+        <ol class="roadmap" [attr.aria-label]="project.roadmapLabel || 'Project phases'">
           @for (step of project.roadmap; track step.label; let i = $index) {
             <li [class.done]="step.done">
               <span class="roadmap-box">{{ i + 1 }}</span>
@@ -87,30 +88,47 @@
         </ol>
       }
 
-      <div class="progress-columns">
-        @if (project.highlights?.length) {
-          <div class="progress-block built">
-            <h5>Built — phase 1</h5>
-            <ul>
-              @for (item of project.highlights; track item) {
-                <li>{{ item }}</li>
-              }
-            </ul>
-          </div>
-        }
-        @if (project.planned?.length) {
-          <div class="progress-block planned">
-            <h5>Next — planned</h5>
-            <ul>
-              @for (item of project.planned; track item) {
-                <li>{{ item }}</li>
-              }
-            </ul>
-          </div>
-        }
-      </div>
+      @if (!project.details?.length) {
+        <div class="progress-columns">
+          @if (project.highlights?.length) {
+            <div class="progress-block built">
+              <h5>Built — phase 1</h5>
+              <ul>
+                @for (item of project.highlights; track item) {
+                  <li>{{ item }}</li>
+                }
+              </ul>
+            </div>
+          }
+          @if (project.planned?.length) {
+            <div class="progress-block planned">
+              <h5>Next — planned</h5>
+              <ul>
+                @for (item of project.planned; track item) {
+                  <li>{{ item }}</li>
+                }
+              </ul>
+            </div>
+          }
+        </div>
+      }
 
     </div>
+
+    @if (project.details?.length) {
+      <div class="project-details">
+        @for (block of project.details; track block.heading) {
+          <section class="progress-block detail-block">
+            <h5>{{ block.heading }}</h5>
+            <ul>
+              @for (item of block.items; track item) {
+                <li>{{ item }}</li>
+              }
+            </ul>
+          </section>
+        }
+      </div>
+    }
   }
 
 </article>

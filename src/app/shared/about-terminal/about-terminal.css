@@ -40,7 +40,7 @@
     box-shadow 0.2s ease;
 }
 
-.cert:hover {
+.cert:not(.static):hover {
   border-color: var(--primary-border);
   box-shadow: var(--hover-shadow);
 }
@@ -63,6 +63,20 @@
 .cert-issuer {
   color: var(--text-3);
   font-size: 0.78rem;
+}
+
+/* Printed certificate ID (no verification URL on the document) */
+.cert-id {
+  flex-shrink: 0;
+  padding: 4px 8px;
+  border: 1px solid var(--tone-navy-border);
+  border-radius: var(--radius-sm);
+  background: var(--tone-navy-soft);
+  color: var(--tone-navy-text);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+  white-space: nowrap;
 }
 
 .cert-verify {
@@ -90,7 +104,8 @@
     flex-basis: calc(100% - 40px);
   }
 
-  .cert-verify {
+  .cert-verify,
+  .cert-id {
     margin-left: 36px;
   }
 }

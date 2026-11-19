@@ -44,7 +44,7 @@ export class Skills {
 
     {
       name: 'AI & Machine Learning',
-      tone: 'red',
+      tone: 'blue',
       icon: 'mdi:brain',
       skills: [
         { name: 'Python', icon: 'simple-icons:python' },
@@ -61,7 +61,7 @@ export class Skills {
 
     {
       name: 'Computer Vision & Deep Learning',
-      tone: 'orange',
+      tone: 'sky',
       icon: 'mdi:eye-outline',
       skills: [
         { name: 'OpenCV', icon: 'simple-icons:opencv' },
@@ -104,7 +104,7 @@ export class Skills {
 
     {
       name: 'Backend Development',
-      tone: 'red',
+      tone: 'blue',
       icon: 'mdi:server-outline',
       skills: [
         { name: 'FastAPI', icon: 'simple-icons:fastapi' },
@@ -119,7 +119,7 @@ export class Skills {
 
     {
       name: 'Distributed Systems & Data',
-      tone: 'orange',
+      tone: 'sky',
       icon: 'mdi:lan',
       skills: [
         { name: 'Kafka', icon: 'simple-icons:apachekafka' },
@@ -163,7 +163,7 @@ export class Skills {
 
     {
       name: 'DevOps & Tools',
-      tone: 'red',
+      tone: 'blue',
       icon: 'mdi:tools',
       skills: [
         { name: 'Docker · Compose', icon: 'simple-icons:docker' },

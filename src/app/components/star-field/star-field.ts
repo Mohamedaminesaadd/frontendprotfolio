@@ -12,7 +12,7 @@ interface StarLayer {
  * ::after copy placed 2000px below scroll up forever at different speeds.
  *
  * Dark theme: the reference's #1B2735 → #090A0F sky with white stars.
- * Light theme: a pale daylight sky with stars in the site palette.
+ * Light theme: a pale daylight sky with blue, navy and violet stars.
  * Positions are generated once in the browser (the reference does it with
  * Sass random() at build time) so the prerendered HTML stays small;
  * all drawing and motion is plain CSS.

@@ -24,7 +24,7 @@ import { PROJECTS, Project, ProjectGroup } from './projects.data';
 })
 export class Projects {
 
-  readonly current = this.byGroup('current');
+  readonly flagship = this.byGroup('flagship');
   readonly featured = this.byGroup('featured');
   readonly other = this.byGroup('other');
   readonly learning = this.byGroup('learning');

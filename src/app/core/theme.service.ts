@@ -7,7 +7,7 @@ const STORAGE_KEY = 'theme';
 
 const THEME_COLOR: Record<Theme, string> = {
   dark: '#090a0f',
-  light: '#f7f9fc'
+  light: '#f3f6fa'
 };
 
 /**

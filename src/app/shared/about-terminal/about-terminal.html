@@ -1,20 +1,14 @@
 <article class="certs card" id="certifications">
 
   <header class="card-head">
-    <h3 class="fs-title">Verified certificates</h3>
-    <p class="fs-subtitle">Each one opens its official verification page</p>
+    <h3 class="fs-title">Certifications</h3>
+    <p class="fs-subtitle">Linked ones open their official verification page</p>
   </header>
 
   <ol class="cert-list">
-    @for (cert of certificates; track cert.verifyUrl; let i = $index) {
+    @for (cert of certificates; track cert.title; let i = $index) {
       <li>
-        <a
-          class="cert"
-          [href]="cert.verifyUrl"
-          target="_blank"
-          rel="noopener noreferrer"
-          [attr.aria-label]="cert.title + (cert.issuer ? ', ' + cert.issuer : '') + ' — open the verification page'"
-        >
+        <ng-template #meta>
           <span class="step active">{{ i + 1 }}</span>
 
           <span class="cert-meta">
@@ -24,11 +18,35 @@
                 {{ cert.issuer }} ·
               }
               {{ cert.platform }}
+              @if (cert.date) {
+                · {{ cert.date }}
+              }
             </span>
           </span>
+        </ng-template>
 
-          <span class="btn btn-secondary btn-sm cert-verify" aria-hidden="true">Verify ↗</span>
-        </a>
+        @if (cert.verifyUrl) {
+          <a
+            class="cert"
+            [href]="cert.verifyUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+            [attr.aria-label]="cert.title + (cert.issuer ? ', ' + cert.issuer : '') + ' — open the verification page'"
+          >
+            <ng-container [ngTemplateOutlet]="meta"></ng-container>
+            <span class="btn btn-secondary btn-sm cert-verify" aria-hidden="true">Verify ↗</span>
+          </a>
+        } @else {
+          <div class="cert static">
+            <ng-container [ngTemplateOutlet]="meta"></ng-container>
+            @if (cert.credentialId) {
+              <span class="cert-id">
+                <span class="sr-only">Certificate ID</span>
+                <span aria-hidden="true">ID</span> {{ cert.credentialId }}
+              </span>
+            }
+          </div>
+        }
       </li>
     }
   </ol>
