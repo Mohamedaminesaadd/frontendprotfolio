@@ -16,7 +16,7 @@ import { RouterLink } from "@angular/router";
 })
 export class Terminal implements OnInit, OnDestroy {
 
-  readonly focusText = "AI · Cybersecurity · Blockchain · Distributed systems";
+  readonly focusText = "AI  ·LLM ·RAG ·AGENT · Cybersecurity · Blockchain · Distributed systems";
 
   /** Typed text — a signal so updates from requestAnimationFrame are tracked. */
   readonly focus = signal("");

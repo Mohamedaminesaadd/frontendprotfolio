@@ -23,7 +23,7 @@ export class Editor {
     { label: 'School', value: 'ENIS — École Nationale d\'Ingénieurs de Sfax', wide: true },
     { label: 'Graduation', value: 'Expected 2027' },
     { label: 'Location', value: 'Sfax, Tunisia' },
-    { label: 'Focus', value: 'Cybersecurity · Distributed systems · AI for security', wide: true },
+    { label: 'Focus', value: 'IA · llm · Agent · Rag · Cybersecurity · Distributed systems · AI for security', wide: true },
     { label: 'Looking for', value: 'End-of-studies (PFE) internship in cybersecurity', wide: true },
     { label: 'Languages', value: 'Arabic (native) · French · English', wide: true }
   ];

@@ -1,3 +1,4 @@
+
 import { Injectable, inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
@@ -17,16 +18,14 @@ export class AIAgentService {
   private readonly platformId = inject(PLATFORM_ID);
 
   private readonly apiUrl =
-    'http://45.81.6.148/api/chat';
+    'http://45.81.6.148:8000/api/chat';
 
   private getOrCreateThreadId(): string {
 
-    // Server / SSR
     if (!isPlatformBrowser(this.platformId)) {
       return 'ssr-session';
     }
 
-    // Browser
     let threadId = localStorage.getItem('thread_id');
 
     if (!threadId) {
@@ -53,3 +52,4 @@ export class AIAgentService {
     );
   }
 }
+
