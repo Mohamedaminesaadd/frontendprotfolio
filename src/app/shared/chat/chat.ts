@@ -104,11 +104,10 @@ export class Chat
   // ============================================================
 
   readonly suggestedQuestions = [
-    "Tell me about Mohamed's AI projects",
-    "What are his main technical skills?",
-    "Tell me about his education",
-    "What experience does he have?",
-    "What technologies does he use?"
+    "tell me about amine in short",
+    "tell me about amine's education in short",
+    "Tell me about Mohamed's AI projects in short ",
+    "What are his main technical skills in short",
   ];
 
 
