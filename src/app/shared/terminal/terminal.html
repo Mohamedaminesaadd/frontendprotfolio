@@ -1,147 +1,49 @@
-<div class="terminal-window">
+<article class="profile-card card">
 
-  <!-- Terminal header -->
-  <div class="terminal-header">
+  <!-- Progress-style intro, as in the reference -->
+  <p class="profile-eyebrow">
+    <span class="step active">1</span>
+    AI &amp; Security Engineering
+  </p>
 
-    <div class="terminal-dots">
+  <h1 class="profile-name">Mohamed Amine Saad</h1>
 
-      <span class="dot red"></span>
-      <span class="dot yellow"></span>
-      <span class="dot green"></span>
+  <p class="profile-role">
+    Final-year Computer Engineering student at
+    <strong>ENIS</strong>, Sfax, Tunisia.
+  </p>
 
+  <!-- Terminal block (original identity) -->
+  <div class="terminal" aria-label="Profile summary">
+    <div class="code-line">
+      <span class="prompt">$</span>
+      <span class="command">echo $FOCUS</span>
+    </div>
+    <div class="code-line output" [attr.aria-label]="focusText">
+      <span aria-hidden="true">{{ focus() }}<span class="typing-cursor"></span></span>
     </div>
 
-    <span class="terminal-title">
-      ~/portfolio - bash
-    </span>
-
+    <div class="code-line">
+      <span class="prompt">$</span>
+      <span class="command">cat status.txt</span>
+    </div>
+    <div class="code-line output">
+      <span><mark class="status-text">Looking for an end-of-studies (PFE) internship in cybersecurity</mark></span>
+    </div>
   </div>
 
-
-  <!-- Terminal body -->
-  <div class="terminal-body">
-
-    <!-- AI badge -->
-    <div class="hero-chip">
-
-      <span class="chip-icon">
-        ✦
-      </span>
-
-      <span>
-        Artificial Intelligence
-      </span>
-
-    </div>
-
-
-    <!-- WHOAMI -->
-    <div class="code-line">
-
-      <span class="prompt">
-        $
-      </span>
-
-      <span class="command">
-        whoami
-      </span>
-
-    </div>
-
-    <div class="code-line output">
-
-      <span class="typing-text name-text">
-
-        {{ name }}<span class="typing-cursor"></span>
-
-      </span>
-
-    </div>
-
-
-    <!-- ROLE -->
-    <div class="code-line">
-
-      <span class="prompt">
-        $
-      </span>
-
-      <span class="command">
-        cat role.txt
-      </span>
-
-    </div>
-
-    <div class="code-line output">
-
-      <span class="typing-text">
-
-        {{ role }}<span class="typing-cursor"></span>
-
-      </span>
-
-    </div>
-
-
-    <!-- PASSION -->
-    <div class="code-line">
-
-      <span class="prompt">
-        $
-      </span>
-
-      <span class="command">
-        echo $PASSION
-      </span>
-
-    </div>
-
-    <div class="code-line output">
-
-      <span class="typing-text">
-
-        {{ passion }}<span class="typing-cursor"></span>
-
-      </span>
-
-    </div>
-
-
-    <!-- LOCATION -->
-    <div class="code-line">
-
-      <span class="prompt">
-        $
-      </span>
-
-      <span class="command">
-        pwd
-      </span>
-
-    </div>
-
-    <div class="code-line output">
-
-      <span class="typing-text location-text">
-        Tunisia
-      </span>
-
-    </div>
-
-
-    <!-- FINAL PROMPT -->
-    <div class="code-line final-prompt">
-
-      <span class="prompt">
-        $
-      </span>
-
-      <span class="command">
-        ready_to_build<span class="terminal-cursor">_</span>
-      </span>
-
-    </div>
-
+  <div class="profile-actions">
+    <a class="btn btn-primary" routerLink="/projects">View projects</a>
+    <a class="btn btn-secondary" routerLink="/contact">Contact me</a>
   </div>
 
-</div>
+  <div class="profile-links">
+    <a href="https://github.com/Mohamedaminesaadd" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile">
+      <iconify-icon icon="mdi:github" aria-hidden="true"></iconify-icon> GitHub
+    </a>
+    <a href="https://www.linkedin.com/in/mohamed-amine-50956b296/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile">
+      <iconify-icon icon="mdi:linkedin" aria-hidden="true"></iconify-icon> LinkedIn
+    </a>
+  </div>
+
+</article>

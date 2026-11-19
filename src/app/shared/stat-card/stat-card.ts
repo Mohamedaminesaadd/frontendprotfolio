@@ -12,4 +12,6 @@ export class StatCard {
 
   label = input.required<string>();
 
+  tone = input<string>('emerald');
+
 }

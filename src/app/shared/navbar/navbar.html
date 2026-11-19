@@ -1,13 +1,72 @@
 <nav class="navbar" aria-label="Primary navigation">
-  <a class="nav-logo" href="#home" (click)="navigateTo('home', '/'); $event.preventDefault()" aria-label="Go to home">
-    <span class="logo-bracket">&lt;</span><span class="logo-name">MA</span><span class="logo-bracket">/&gt;</span>
+
+  <a class="nav-logo" href="/" (click)="navigateTo('home', '/'); $event.preventDefault()" aria-label="Mohamed Amine Saad — home">
+    MA
   </a>
-  <div class="nav-links">
-    <a class="nav-link" href="#home" (click)="navigateTo('home', '/'); $event.preventDefault()" [class.active]="router.url === '/'" aria-label="Home"><span class="nav-number">01</span><span class="nav-icon">⌂</span><span class="nav-label">Home</span></a>
-    <a class="nav-link" href="#about" (click)="navigateTo('about', '/about'); $event.preventDefault()" [class.active]="router.url.startsWith('/about')" aria-label="About"><span class="nav-number">02</span><span class="nav-icon">◉</span><span class="nav-label">About</span></a>
-    <a class="nav-link" href="#projects" (click)="navigateTo('projects', '/projects'); $event.preventDefault()" [class.active]="router.url.startsWith('/projects')" aria-label="Projects"><span class="nav-number">03</span><span class="nav-icon">▣</span><span class="nav-label">Projects</span></a>
-    <a class="nav-link" href="#skills" (click)="navigateTo('skills', '/skills'); $event.preventDefault()" [class.active]="router.url.startsWith('/skills')" aria-label="Skills"><span class="nav-number">04</span><span class="nav-icon">&lt;/&gt;</span><span class="nav-label">Skills</span></a>
-    <a class="nav-link" href="/chat" (click)="navigateTo('chat', '/chat'); $event.preventDefault()" [class.active]="router.url.startsWith('/chat')" aria-label="AI chat"><span class="nav-number">05</span><span class="nav-icon">◌</span><span class="nav-label">AI Chat</span></a>
-  </div>
-  <div class="nav-status" aria-label="Available"><span class="status-dot"></span><span>ONLINE</span></div>
+
+  <ol class="nav-steps" [style.--progress]="progress() / 100">
+    @for (step of steps; track step.id; let i = $index) {
+      <li>
+        <a
+          class="nav-step"
+          [class.done]="i <= active()"
+          [class.current]="i === active()"
+          [attr.aria-current]="i === active() ? 'step' : null"
+          [href]="step.path"
+          (click)="navigateTo(step.id, step.path); $event.preventDefault()"
+        >
+          <span class="step-box">{{ i + 1 }}</span>
+          <span class="nav-label">{{ step.label }}</span>
+        </a>
+      </li>
+    }
+  </ol>
+
+  <a
+    class="nav-chat"
+    [class.current]="active() === -1"
+    href="/chat"
+    (click)="navigateTo('chat', '/chat'); $event.preventDefault()"
+    aria-label="Open the AI assistant in full screen"
+  >
+    <iconify-icon icon="mdi:robot-outline" aria-hidden="true"></iconify-icon>
+    <span class="nav-label">AI chat</span>
+  </a>
+
+  <!-- Light / dark switch. Icon + label follow <html data-theme> via CSS,
+       so they are right before hydration (no flash). -->
+  <button
+    #themeButton
+    type="button"
+    class="nav-theme"
+    aria-label="Dark mode"
+    [attr.aria-pressed]="theme.theme() === 'dark'"
+    [attr.title]="theme.theme() === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'"
+    (click)="theme.toggle(themeButton)"
+  >
+    <span class="theme-tile">
+      <svg class="theme-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <mask id="theme-icon-moon">
+          <rect width="24" height="24" fill="#fff" />
+          <circle class="moon-cut" cx="18" cy="7" r="6.5" fill="#000" />
+        </mask>
+        <circle class="sun-core" cx="12" cy="12" r="5" fill="currentColor" mask="url(#theme-icon-moon)" />
+        <g class="sun-rays" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="12" y1="1.5" x2="12" y2="3.5" />
+          <line x1="12" y1="20.5" x2="12" y2="22.5" />
+          <line x1="1.5" y1="12" x2="3.5" y2="12" />
+          <line x1="20.5" y1="12" x2="22.5" y2="12" />
+          <line x1="4.6" y1="4.6" x2="6" y2="6" />
+          <line x1="18" y1="18" x2="19.4" y2="19.4" />
+          <line x1="4.6" y1="19.4" x2="6" y2="18" />
+          <line x1="18" y1="6" x2="19.4" y2="4.6" />
+        </g>
+      </svg>
+    </span>
+    <span class="nav-label">
+      <span class="label-dark">Dark</span>
+      <span class="label-light">Light</span>
+    </span>
+  </button>
+
 </nav>

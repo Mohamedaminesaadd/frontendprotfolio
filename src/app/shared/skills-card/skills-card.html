@@ -1,35 +1,26 @@
-<div class="skill-category">
+<article [class]="'skill-category card tone-' + tone">
 
-  <div class="category-header">
-
-    <span class="folder-icon">
+  <header class="category-header">
+    <span class="folder-icon" aria-hidden="true">
       <iconify-icon [attr.icon]="categoryIcon"></iconify-icon>
     </span>
+    <h3 class="fs-title category-name">{{ categoryName }}</h3>
+  </header>
 
-    <span class="category-name">
-      {{ categoryName }}
-    </span>
+  <ul class="skill-items">
+    @for (skill of skills; track skill.name) {
+      <li class="skill-item">
+        <iconify-icon class="skill-icon" [attr.icon]="skill.icon" aria-hidden="true"></iconify-icon>
+        <span class="skill-name">{{ skill.name }}</span>
+      </li>
+    }
+  </ul>
 
-  </div>
+  @if (usedIn.length) {
+    <p class="used-in">
+      <span class="used-in-label">Used in</span>
+      {{ usedIn.join(' · ') }}
+    </p>
+  }
 
-
-  <div class="skill-items">
-
-    <div
-      class="skill-item"
-      *ngFor="let skill of skills"
-    >
-
-      <div class="skill-icon">
-        <iconify-icon [attr.icon]="skill.icon"></iconify-icon>
-      </div>
-
-      <span class="skill-name">
-        {{ skill.name }}
-      </span>
-
-    </div>
-
-  </div>
-
-</div>
+</article>

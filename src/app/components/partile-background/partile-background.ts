@@ -38,6 +38,8 @@ export class ParticleBackground
 
   private readonly particleCount = 70;
 
+  private reducedMotion = false;
+
 
   ngAfterViewInit(): void {
 
@@ -58,7 +60,14 @@ export class ParticleBackground
 
     this.createParticles();
 
-    this.animate();
+    this.reducedMotion =
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (this.reducedMotion) {
+      this.drawStatic();
+    } else {
+      this.animate();
+    }
 
     window.addEventListener(
       'resize',
@@ -138,6 +147,17 @@ export class ParticleBackground
   }
 
 
+  /** Single still frame for visitors who prefer reduced motion. */
+  private drawStatic(): void {
+
+    this.ctx.clearRect(0, 0, this.width, this.height);
+
+    this.drawConnections();
+
+    this.drawParticles();
+  }
+
+
   private animate = (): void => {
 
     this.ctx.clearRect(
@@ -209,16 +229,9 @@ export class ParticleBackground
       );
 
       this.ctx.fillStyle =
-        'rgba(0, 255, 65, 0.45)';
-
-      this.ctx.shadowBlur = 8;
-
-      this.ctx.shadowColor =
-        'rgba(0, 255, 65, 0.5)';
+        'rgba(16, 185, 129, 0.35)';
 
       this.ctx.fill();
-
-      this.ctx.shadowBlur = 0;
     }
   }
 
@@ -281,7 +294,7 @@ export class ParticleBackground
           );
 
           this.ctx.strokeStyle =
-            `rgba(0, 212, 255, ${opacity * 0.12})`;
+            `rgba(99, 102, 241, ${opacity * 0.14})`;
 
           this.ctx.lineWidth = 0.6;
 
@@ -314,6 +327,10 @@ export class ParticleBackground
     this.resize();
 
     this.createParticles();
+
+    if (this.reducedMotion) {
+      this.drawStatic();
+    }
   };
 
 }

@@ -1,18 +1,23 @@
 import { Component, Input, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
+import { Project } from '../../page/projects/projects.data';
+
+/**
+ * Project card — keeps the original "code window" look
+ * (traffic-light dots + file name header).
+ *
+ *  - wide:    full-width card with "built" vs "next steps" (EVA-Guard)
+ *  - large:   featured project, highlights + optional demo video
+ *  - compact: smaller card for secondary / learning projects
+ */
 @Component({
   selector: 'app-project-cart',
   standalone: true,
-  imports: [CommonModule],
   templateUrl: './project-cart.html',
   styleUrl: './project-cart.css',
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ProjectCart {
-  @Input({ required: true }) fileName!: string;
-  @Input({ required: true }) fileIcon!: string;
-  @Input() tags: string[] = [];
-  @Input() liveUrl?: string;
-  @Input() codeUrl?: string;
+  @Input({ required: true }) project!: Project;
+  @Input() variant: 'wide' | 'large' | 'compact' = 'large';
 }

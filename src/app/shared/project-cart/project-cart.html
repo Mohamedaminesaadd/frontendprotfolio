@@ -1,31 +1,116 @@
-<article class="project-card">
-  <div class="project-header">
-    <div class="project-dots">
-      <span class="dot red"></span>
-      <span class="dot yellow"></span>
-      <span class="dot green"></span>
-    </div>
-    <span class="project-file">
-      <iconify-icon [attr.icon]="fileIcon"></iconify-icon>
-      {{ fileName }}
-    </span>
+<article
+  [class]="'project-card card tone-' + project.tone + ' ' + variant"
+  [class.has-video]="!!project.video"
+  [attr.aria-labelledby]="project.id + '-title'"
+>
+
+  <div class="project-main">
+
+    <!-- Header: icon, title, context, status -->
+    <header class="project-head">
+      <span class="project-icon" aria-hidden="true">
+        <iconify-icon [attr.icon]="project.fileIcon"></iconify-icon>
+      </span>
+      <div class="project-titles">
+        <h4 class="project-title" [id]="project.id + '-title'">{{ project.title }}</h4>
+        @if (project.context) {
+          <p class="project-context">{{ project.context }}</p>
+        }
+      </div>
+      <span [class]="'status-badge ' + project.status">{{ project.statusLabel }}</span>
+    </header>
+
+    <p class="project-summary">{{ project.summary }}</p>
+
+    @if (variant !== 'wide' && project.highlights?.length) {
+      <ul class="project-highlights">
+        @for (item of project.highlights; track item) {
+          <li>{{ item }}</li>
+        }
+      </ul>
+    }
+
+    <footer class="project-footer">
+      <ul class="project-tags" aria-label="Technologies">
+        @for (tag of project.tags; track tag) {
+          <li class="tag-item">{{ tag }}</li>
+        }
+      </ul>
+      <a
+        class="btn btn-secondary btn-sm project-link"
+        [href]="project.codeUrl"
+        target="_blank"
+        rel="noopener noreferrer"
+        [attr.aria-label]="'View ' + project.title + ' on GitHub'"
+      >
+        <iconify-icon icon="mdi:github" aria-hidden="true"></iconify-icon>
+        View code
+      </a>
+    </footer>
+
   </div>
 
-  <div class="project-body">
-    <pre><code><ng-content></ng-content></code></pre>
-  </div>
 
-  <div class="project-footer">
-    <div class="project-tags">
-      <span class="tag-item" *ngFor="let tag of tags">{{ tag }}</span>
+  <!-- Demo video (photovoltaic platform only) -->
+  @if (project.video; as video) {
+    <figure class="project-video">
+      <figcaption class="fs-title video-title">{{ video.title }}</figcaption>
+      <video
+        controls
+        playsinline
+        preload="metadata"
+        [attr.width]="video.width"
+        [attr.height]="video.height"
+        [src]="video.src + '#t=6'"
+        [attr.aria-label]="video.title + ' — ' + project.title"
+      >
+        <a [href]="video.src">Download the demonstration video</a>
+      </video>
+      <p class="video-caption">{{ video.caption }}</p>
+    </figure>
+  }
+
+
+  <!-- Roadmap progress bar (EVA-Guard) -->
+  @if (variant === 'wide') {
+    <div class="project-progress">
+
+      @if (project.roadmap?.length) {
+        <ol class="roadmap" aria-label="Project phases">
+          @for (step of project.roadmap; track step.label; let i = $index) {
+            <li [class.done]="step.done">
+              <span class="roadmap-box">{{ i + 1 }}</span>
+              <span class="roadmap-label">{{ step.label }}</span>
+              <span class="sr-only">{{ step.done ? '(built)' : '(planned)' }}</span>
+            </li>
+          }
+        </ol>
+      }
+
+      <div class="progress-columns">
+        @if (project.highlights?.length) {
+          <div class="progress-block built">
+            <h5>Built — phase 1</h5>
+            <ul>
+              @for (item of project.highlights; track item) {
+                <li>{{ item }}</li>
+              }
+            </ul>
+          </div>
+        }
+        @if (project.planned?.length) {
+          <div class="progress-block planned">
+            <h5>Next — planned</h5>
+            <ul>
+              @for (item of project.planned; track item) {
+                <li>{{ item }}</li>
+              }
+            </ul>
+          </div>
+        }
+      </div>
+
     </div>
-    <div class="project-links">
-      <a *ngIf="liveUrl" [href]="liveUrl" class="project-link" target="_blank" rel="noopener noreferrer">
-        <iconify-icon icon="solar:play-circle-bold"></iconify-icon> Live
-      </a>
-      <a *ngIf="codeUrl" [href]="codeUrl" class="project-link" target="_blank" rel="noopener noreferrer">
-        <iconify-icon icon="solar:code-square-bold"></iconify-icon> Code
-      </a>
-    </div>
-  </div>
+  }
+
 </article>

@@ -1,0 +1,230 @@
+:host {
+  display: block;
+  margin-top: 10rem;     /* room for the bubbles to rise */
+  margin-left: -112px;   /* full width, under the fixed stepper */
+}
+
+.footer {
+  /* Colors come from the theme tokens (styles.css):
+     dark = charcoal "fire" with a blue-gray rim, light = red bubbles */
+  --footer-background: var(--footer-bg);
+
+  position: relative;
+  z-index: 1;
+
+  display: grid;
+  min-height: 12rem;
+}
+
+
+/* =========================================================
+   BUBBLES + GOOEY FILTER
+   ========================================================= */
+
+.bubbles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1rem;
+
+  background: var(--footer-background);
+
+  /* Goo first, then a thin blue-gray rim + soft glow around the merged
+     shape, so the charcoal flames stay visible against the night sky. */
+  filter:
+    url("#footer-blob")
+    drop-shadow(0 -1px 0 var(--footer-rim))
+    drop-shadow(0 0 12px var(--footer-glow));
+}
+
+.bubble {
+  position: absolute;
+  left: var(--position, 50%);
+
+  background: var(--footer-background);
+  border-radius: 100%;
+
+  transform: translate(-50%, 100%);
+
+  animation:
+    bubble-size var(--time, 4s) ease-in infinite var(--delay, 0s),
+    bubble-move var(--time, 4s) ease-in infinite var(--delay, 0s);
+}
+
+@keyframes bubble-size {
+  0%,
+  75% {
+    width: var(--size, 4rem);
+    height: var(--size, 4rem);
+  }
+
+  100% {
+    width: 0rem;
+    height: 0rem;
+  }
+}
+
+@keyframes bubble-move {
+  0% {
+    bottom: -4rem;
+  }
+
+  100% {
+    bottom: var(--distance, 10rem);
+  }
+}
+
+.blob-filter {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+
+/* =========================================================
+   CONTENT
+   ========================================================= */
+
+.content {
+  position: relative;
+  z-index: 2;
+
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 4rem;
+
+  padding: 2.5rem 3rem 2.5rem calc(112px + 1rem);
+  background: var(--footer-background);
+  color: var(--footer-link);
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, max-content));
+  gap: 1.5rem 4rem;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.column b {
+  margin-bottom: 0.35rem;
+  color: var(--footer-heading);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.column a {
+  color: var(--footer-link);
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+  opacity: 0.92;
+  transition: opacity 0.2s ease;
+}
+
+.column a:hover {
+  opacity: 1;
+  color: var(--footer-heading);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.column a:focus-visible,
+.mark:focus-visible {
+  box-shadow: 0 0 0 2px var(--footer-background), 0 0 0 4px var(--footer-heading);
+}
+
+
+/* Brand block (stands in for the snippet's image — no images) */
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  text-align: center;
+}
+
+.mark {
+  display: grid;
+  place-items: center;
+
+  width: 4rem;
+  height: 4rem;
+  margin-bottom: 0.5rem;
+
+  border: 2px solid var(--footer-mark-border);
+  border-radius: var(--radius-sm);
+  color: #ffffff;
+
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.mark:hover {
+  background: var(--footer-mark-hover-bg);
+  border-color: var(--footer-mark-hover-bg);
+  color: var(--footer-mark-hover-fg);
+}
+
+.brand p {
+  margin: 0;
+  color: var(--footer-muted);
+  font-size: 0.78rem;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 900px) {
+  .content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 2.5rem 2rem 2.5rem calc(112px + 0.5rem);
+  }
+
+  .brand {
+    align-items: flex-start;
+    text-align: left;
+  }
+}
+
+@media (max-width: 700px) {
+  :host {
+    margin-left: 0;
+    margin-top: 7rem;
+    /* run under the fixed bottom navigation */
+    margin-bottom: calc(-92px - env(safe-area-inset-bottom));
+  }
+
+  .content {
+    padding: 2rem 1.25rem calc(2rem + 92px + env(safe-area-inset-bottom));
+  }
+
+  .columns {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem 2rem;
+  }
+}
+
+
+/* Reduced motion: no rising bubbles, just the clean edge */
+@media (prefers-reduced-motion: reduce) {
+  .bubble {
+    display: none;
+  }
+}

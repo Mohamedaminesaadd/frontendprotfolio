@@ -1,4 +1,237 @@
 /* =========================================================
+   DESIGN SYSTEM — dark space theme
+   Background: "Pure CSS Parallax Pixel Stars" (radial #1B2735 → #090A0F,
+   three layers of white pixel stars drifting upward — app-star-field).
+   Kept from the earlier direction (Atakan Goktepe's multi-step form):
+   - "fieldset" cards — now slightly lighter navy surfaces with a hairline
+   - Montserrat, uppercase titles + muted subtitles
+   - flat red actions with a gap focus ring
+   - numbered square steps joined by a line (progress bar)
+   Token rule: *-strong = FILL (white text on it), *-text = TEXT color.
+
+   THEMES — <html data-theme="dark|light">, set before first paint by the
+   inline script in index.html and toggled by ThemeService.
+   :root holds the DARK theme (also the no-JS fallback);
+   :root[data-theme="light"] below overrides only what changes.
+========================================================= */
+
+:root {
+  color-scheme: dark;
+
+  /* Space backdrop */
+  --space-deep: #090a0f;
+  --space-navy: #1b2735;
+
+  /* Surfaces — slightly lighter than the sky so cards read as panels */
+  --bg: #121a25;
+  --bg-subtle: #172130;
+  --bg-muted: #1f2b3b;
+  --bg-input: #0d131c;
+  --ink: #2b3c52;               /* dark slate fill (avatars, brand mark) */
+  --ring-gap: var(--bg);
+
+  /* Borders — soft blue-gray hairlines */
+  --border: rgba(148, 163, 184, 0.14);
+  --border-strong: rgba(148, 163, 184, 0.32);
+
+  /* Text — near-white, two muted blue-grays */
+  --navy: #e8edf3;              /* historic name: heading/body text color */
+  --text: #e8edf3;
+  --text-2: #b4c0ce;
+  --text-3: #8d9aab;
+  --slate: #8fa3bf;             /* blue-gray accent */
+
+  /* Green — semantic "completed" */
+  --green: #27ae60;
+  --green-strong: #1e8449;
+  --green-hover: #196f3d;
+  --green-text: #63d391;
+  --green-soft: rgba(39, 174, 96, 0.14);
+  --green-border: rgba(39, 174, 96, 0.4);
+
+  /* Primary — red (#ED5565 family) */
+  --primary: #ed5565;
+  --primary-strong: #cc3344;
+  --primary-hover: #b52d3c;
+  --primary-text: #f27a87;
+  --primary-soft: rgba(237, 85, 101, 0.14);
+  --primary-border: rgba(237, 85, 101, 0.45);
+
+  /* Footer — charcoal, matches the night sky */
+  --footer-charcoal: #0c1017;
+
+  --orange: #e08a2c;
+  --orange-strong: #a04f00;
+  --orange-text: #f2aa62;
+  --orange-soft: rgba(224, 138, 44, 0.14);
+  --orange-border: rgba(224, 138, 44, 0.4);
+
+  --purple: #9b59b6;
+  --purple-strong: #7d3c98;
+  --purple-text: #c9a3dc;
+  --purple-soft: rgba(155, 89, 182, 0.16);
+  --purple-border: rgba(155, 89, 182, 0.45);
+
+  /* Backwards-compatible aliases used by components */
+  --accent: var(--primary-strong);
+  --accent-hover: var(--primary-hover);
+  --accent-soft: var(--primary-soft);
+  --accent-border: var(--primary-border);
+  --blue: var(--purple-strong);
+  --blue-soft: var(--purple-soft);
+  --blue-border: var(--purple-border);
+  --amber: var(--orange-strong);
+  --amber-soft: var(--orange-soft);
+  --amber-border: var(--orange-border);
+
+  /* Code tokens */
+  --code-keyword: #f2aa62;
+  --code-variable: #c9a3dc;
+  --code-string: #63d391;
+  --code-property: #e8edf3;
+
+  /* Neutral "navy" tone (cards / icon tiles) */
+  --tone-navy-fill: #3d5470;
+  --tone-navy-text: #a9bad0;
+  --tone-navy-soft: rgba(143, 163, 191, 0.14);
+  --tone-navy-border: rgba(143, 163, 191, 0.38);
+
+  /* Misc. component roles */
+  --btn-secondary-bg: rgba(148, 163, 184, 0.06);
+  --selection-bg: rgba(237, 85, 101, 0.4);
+  --selection-fg: #ffffff;
+  --danger: #e0564a;
+  --danger-text: #f5a59c;
+  --danger-soft: rgba(224, 86, 74, 0.12);
+  --danger-border: rgba(224, 86, 74, 0.5);
+  --media-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.45);
+  --hover-shadow: 0 0 12px rgba(0, 0, 0, 0.35);
+
+  /* Footer "fire" — charcoal with a blue-gray rim */
+  --footer-bg: var(--footer-charcoal);
+  --footer-rim: rgba(143, 163, 191, 0.38);
+  --footer-glow: rgba(143, 163, 191, 0.16);
+  --footer-heading: #ffffff;
+  --footer-link: #b4c0ce;
+  --footer-muted: #8d9aab;
+  --footer-mark-border: var(--primary);
+  --footer-mark-hover-bg: var(--primary-strong);
+  --footer-mark-hover-fg: #ffffff;
+
+  /* Shape */
+  --radius-sm: 3px;
+  --radius: 6px;
+  --radius-lg: 8px;
+
+  /* Shadows — hairline + deep drop, so panels float above the stars */
+  --shadow-sm: 0 0 0 1px var(--border), 0 2px 6px rgba(0, 0, 0, 0.3);
+  --shadow: 0 0 0 1px var(--border), 0 12px 32px rgba(0, 0, 0, 0.38);
+  --shadow-lift: 0 0 0 1px rgba(143, 163, 191, 0.34), 0 18px 44px rgba(0, 0, 0, 0.5);
+
+  /* Focus ring: gap in the surface color, then red */
+  --ring: 0 0 0 2px var(--ring-gap), 0 0 0 3px var(--primary);
+
+  /* Type */
+  --font-sans: 'Montserrat', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+
+/* ---------------------------------------------------------
+   LIGHT THEME — daylight sky, white cards, colored stars,
+   red bubble footer (the earlier light design)
+--------------------------------------------------------- */
+
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --space-deep: #f7f9fc;
+  --space-navy: #e6ecf4;
+
+  --bg: #ffffff;
+  --bg-subtle: #f7f8fa;
+  --bg-muted: #eef0f3;
+  --bg-input: #ffffff;
+  --ink: #2c3e50;
+
+  --border: #e3e6ea;
+  --border-strong: #cccccc;
+
+  --navy: #2c3e50;
+  --text: #2c3e50;
+  --text-2: #4a5866;
+  --text-3: #666666;
+  --slate: #2c3e50;
+
+  --green-text: #1e8449;
+  --green-soft: #eaf7ef;
+  --green-border: #a9dfbf;
+
+  --primary-text: #cc3344;
+  --primary-soft: #fdecee;
+  --primary-border: #f5b7bf;
+
+  --orange: #c46600;
+  --orange-text: #a04f00;
+  --orange-soft: #fdf1e5;
+  --orange-border: #f3c99c;
+
+  --purple-text: #7d3c98;
+  --purple-soft: #f6eff9;
+  --purple-border: #d7bde2;
+
+  --code-keyword: #a04f00;
+  --code-variable: #7d3c98;
+  --code-string: #1e8449;
+  --code-property: #2c3e50;
+
+  --tone-navy-fill: #2c3e50;
+  --tone-navy-text: #2c3e50;
+  --tone-navy-soft: #eef1f4;
+  --tone-navy-border: #c9d1d9;
+
+  --shadow-sm: 0 0 0 1px rgba(44, 62, 80, 0.04), 0 1px 3px rgba(44, 62, 80, 0.08);
+  --shadow: 0 0 15px 1px rgba(44, 62, 80, 0.13);
+  --shadow-lift: 0 0 22px 2px rgba(44, 62, 80, 0.2);
+
+  --btn-secondary-bg: #ffffff;
+  --selection-bg: var(--primary-soft);
+  --selection-fg: var(--navy);
+  --danger: #c0392b;
+  --danger-text: #922b21;
+  --danger-soft: #fdedec;
+  --danger-border: #e6b0aa;
+  --media-shadow: 0 0 15px 1px rgba(44, 62, 80, 0.18);
+  --hover-shadow: 0 0 12px rgba(44, 62, 80, 0.1);
+
+  /* Red gooey footer — #CC3344 keeps white text at AA contrast */
+  --footer-bg: #cc3344;
+  --footer-rim: transparent;
+  --footer-glow: transparent;
+  --footer-heading: #ffffff;
+  --footer-link: #ffffff;
+  --footer-muted: rgba(255, 255, 255, 0.88);
+  --footer-mark-border: #ffffff;
+  --footer-mark-hover-bg: #ffffff;
+  --footer-mark-hover-fg: #cc3344;
+}
+
+/* Theme switch: freeze transitions so the circular reveal is clean */
+.theme-switching,
+.theme-switching *,
+.theme-switching *::before,
+.theme-switching *::after {
+  transition: none !important;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+
+/* =========================================================
    GLOBAL RESET
 ========================================================= */
 
@@ -6,15 +239,345 @@ html,
 body {
   margin: 0;
   padding: 0;
-
   width: 100%;
   min-height: 100%;
+}
 
-  background: #0d1117;
+/* Night sky fallback — app-star-field paints the gradient + stars */
+html {
+  background: var(--space-deep);
+  scroll-behavior: smooth;
+}
+
+body {
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 *,
 *::before,
 *::after {
   box-sizing: border-box;
+}
+
+a {
+  color: var(--purple-text);
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--ring);
+  border-radius: var(--radius-sm);
+}
+
+::selection {
+  background: var(--selection-bg);
+  color: var(--selection-fg);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+
+/* =========================================================
+   CARD — the reference "fieldset"
+========================================================= */
+
+.card {
+  position: relative;
+  background: var(--bg);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+}
+
+.card-hover {
+  transition:
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
+}
+
+.card-hover:hover {
+  box-shadow: var(--shadow-lift);
+  transform: translateY(-2px);
+}
+
+/* Uppercase title + gray subtitle, as in the reference */
+.fs-title {
+  margin: 0;
+  color: var(--navy);
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1.35;
+}
+
+.fs-subtitle {
+  margin: 6px 0 0;
+  color: var(--text-3);
+  font-size: 0.85rem;
+  font-weight: 400;
+}
+
+
+/* =========================================================
+   BUTTONS — flat, bold, with the white-gap ring on hover
+========================================================= */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  min-height: 42px;
+  padding: 10px 20px;
+
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+
+  transition:
+    box-shadow 0.2s ease,
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.btn-primary {
+  background: var(--primary-strong);
+  color: #ffffff;
+}
+
+.btn-primary:hover,
+.btn-primary:focus-visible {
+  background: var(--primary-strong);
+  box-shadow: 0 0 0 2px var(--ring-gap), 0 0 0 3px var(--primary);
+}
+
+.btn-secondary {
+  background: var(--btn-secondary-bg);
+  border-color: var(--border-strong);
+  color: var(--navy);
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus-visible {
+  border-color: var(--slate);
+  background: rgba(148, 163, 184, 0.12);
+  box-shadow: 0 0 0 2px var(--ring-gap), 0 0 0 3px var(--slate);
+}
+
+.btn-sm {
+  min-height: 32px;
+  padding: 6px 12px;
+  font-size: 0.75rem;
+}
+
+.btn:disabled {
+  background: var(--bg-muted);
+  border-color: var(--bg-muted);
+  color: var(--text-3);
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+
+/* =========================================================
+   STEP — numbered square from the reference progress bar
+========================================================= */
+
+.step {
+  display: inline-grid;
+  place-items: center;
+
+  width: 22px;
+  height: 22px;
+  flex: 0 0 22px;
+
+  border-radius: var(--radius-sm);
+  background: var(--bg-subtle);
+  color: var(--text-2);
+  box-shadow: 0 0 0 1px var(--border-strong);
+
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.step.active {
+  background: var(--primary-strong);
+  color: #ffffff;
+  box-shadow: none;
+}
+
+
+/* =========================================================
+   SECTION HEADER — sits directly on the night sky
+========================================================= */
+
+.section-header {
+  max-width: 720px;
+  margin: 0 auto 40px;
+  text-align: center;
+}
+
+.section-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+
+  color: var(--navy);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.section-title {
+  margin: 0;
+  color: var(--navy);
+  font-family: var(--font-sans);
+  font-size: clamp(1.8rem, 3.4vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.section-description {
+  max-width: 600px;
+  margin: 12px auto 0;
+  color: var(--text-2);
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+@media (max-width: 600px) {
+  .section-header {
+    margin-bottom: 28px;
+  }
+
+  .section-description {
+    font-size: 0.94rem;
+  }
+}
+
+
+/* =========================================================
+   GROUP HEADING (inside sections)
+========================================================= */
+
+.group-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 18px;
+}
+
+.group-heading h3 {
+  margin: 0;
+  color: var(--navy);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.group-heading::after {
+  content: "";
+  flex: 1;
+  height: 2px;
+  background: var(--border);
+}
+
+
+/* =========================================================
+   STATUS BADGES — small squared labels
+========================================================= */
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 8px;
+
+  border-radius: var(--radius-sm);
+  background: var(--bg-muted);
+  color: var(--text-2);
+
+  font-family: var(--font-sans);
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.status-badge.completed {
+  background: var(--green-soft);
+  color: var(--green-text);
+}
+
+.status-badge.in-progress {
+  background: var(--orange-soft);
+  color: var(--orange-text);
+}
+
+.status-badge.learning {
+  background: var(--purple-soft);
+  color: var(--purple-text);
+}
+
+
+/* =========================================================
+   TONES — per-card accent drawn from the reference palette
+========================================================= */
+
+/* --tone-strong is a FILL (white icon on it); --tone-text is for text on dark */
+.tone-green  { --tone: var(--green);   --tone-strong: var(--green-strong);   --tone-text: var(--green-text);   --tone-soft: var(--green-soft);   --tone-border: var(--green-border); }
+.tone-red    { --tone: var(--primary); --tone-strong: var(--primary-strong); --tone-text: var(--primary-text); --tone-soft: var(--primary-soft); --tone-border: var(--primary-border); }
+.tone-orange { --tone: var(--orange);  --tone-strong: var(--orange-strong);  --tone-text: var(--orange-text);  --tone-soft: var(--orange-soft);  --tone-border: var(--orange-border); }
+.tone-purple { --tone: var(--purple);  --tone-strong: var(--purple-strong);  --tone-text: var(--purple-text);  --tone-soft: var(--purple-soft);  --tone-border: var(--purple-border); }
+.tone-navy   { --tone: var(--slate);   --tone-strong: var(--tone-navy-fill); --tone-text: var(--tone-navy-text); --tone-soft: var(--tone-navy-soft); --tone-border: var(--tone-navy-border); }
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

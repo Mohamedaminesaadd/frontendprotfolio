@@ -1,107 +1,78 @@
-import { Component, OnDestroy, OnInit, ChangeDetectorRef } from "@angular/core";
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnDestroy, OnInit, PLATFORM_ID, inject, signal } from "@angular/core";
+import { isPlatformBrowser } from "@angular/common";
+import { RouterLink } from "@angular/router";
 
+/**
+ * Hero profile card. Keeps the original terminal identity
+ * ($ prompts + typing animation) inside a clean white card.
+ */
 @Component({
   selector: "app-terminal",
   standalone: true,
+  imports: [RouterLink],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: "./terminal.html",
   styleUrl: "./terminal.css"
 })
 export class Terminal implements OnInit, OnDestroy {
 
-  name = "";
-  role = "";
-  passion = "";
+  readonly focusText = "AI · Cybersecurity · Blockchain · Distributed systems";
 
-  private readonly nameText = "Mohamed Amine Saad";
-  private readonly roleText = "AI / Machine Learning Engineer";
-  private readonly passionText = "Building intelligent systems";
+  /** Typed text — a signal so updates from requestAnimationFrame are tracked. */
+  readonly focus = signal("");
 
   private animationFrame: number | null = null;
+  private timer: ReturnType<typeof setTimeout> | null = null;
   private isDestroyed = false;
-  private isTyping = false;
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
   ngOnInit(): void {
-    // Start after a small delay
-    setTimeout(() => {
-      if (!this.isDestroyed) {
-        this.startTypingSequence();
-      }
-    }, 500);
-  }
-
-  private startTypingSequence(): void {
-    if (this.isTyping || this.isDestroyed) return;
-    this.isTyping = true;
-
-    this.typeTextWithRAF(this.nameText, "name", 30, () => {
-      this.typeTextWithRAF(this.roleText, "role", 25, () => {
-        this.typeTextWithRAF(this.passionText, "passion", 20, () => {
-          this.isTyping = false;
-        });
-      });
-    });
-  }
-
-  private typeTextWithRAF(
-    text: string,
-    property: "name" | "role" | "passion",
-    speed: number,
-    onComplete?: () => void
-  ): void {
-    // Cancel any existing animation
-    if (this.animationFrame !== null) {
-      cancelAnimationFrame(this.animationFrame);
-      this.animationFrame = null;
+    if (!this.isBrowser) {
+      // Server render: show the full text (no animation).
+      this.focus.set(this.focusText);
+      return;
     }
 
-    // Reset the property
-    this[property] = "";
-    let index = 0;
-    let lastTimestamp = 0;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      this.focus.set(this.focusText);
+      return;
+    }
 
-    const typeNext = (timestamp: number) => {
+    this.timer = setTimeout(() => this.type(), 400);
+  }
+
+  private type(): void {
+    let index = 0;
+    let last = 0;
+    this.focus.set("");
+
+    const next = (timestamp: number) => {
       if (this.isDestroyed) return;
 
-      if (lastTimestamp === 0) {
-        lastTimestamp = timestamp;
+      if (timestamp - last >= 28) {
+        index++;
+        last = timestamp;
+        this.focus.set(this.focusText.slice(0, index));
       }
 
-      // Control speed
-      if (timestamp - lastTimestamp >= speed) {
-        if (index < text.length) {
-          this[property] = text.slice(0, index + 1);
-          index++;
-          lastTimestamp = timestamp;
-          
-          // Force change detection
-          this.cdr.detectChanges();
-        }
-      }
-
-      if (index < text.length) {
-        this.animationFrame = requestAnimationFrame(typeNext);
-      } else if (onComplete) {
-        setTimeout(() => {
-          if (!this.isDestroyed) {
-            onComplete();
-            this.cdr.detectChanges();
-          }
-        }, 150);
+      if (index < this.focusText.length) {
+        this.animationFrame = requestAnimationFrame(next);
       }
     };
 
-    this.animationFrame = requestAnimationFrame(typeNext);
+    this.animationFrame = requestAnimationFrame(next);
   }
 
   ngOnDestroy(): void {
     this.isDestroyed = true;
-    this.isTyping = false;
-    
+
     if (this.animationFrame !== null) {
       cancelAnimationFrame(this.animationFrame);
-      this.animationFrame = null;
+    }
+
+    if (this.timer) {
+      clearTimeout(this.timer);
     }
   }
 }

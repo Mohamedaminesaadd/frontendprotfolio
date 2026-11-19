@@ -3,44 +3,24 @@
   width: 100%;
 }
 
-
-.portfolio {
+.portfolio-page {
   width: 100%;
 }
 
-
 .portfolio-section {
   position: relative;
-
   width: 100%;
+  scroll-margin-top: 0;
+}
 
+.home-section {
   min-height: 100vh;
-
-  scroll-margin-top: 20px;
-
   display: flex;
   align-items: center;
 }
 
-
-/* Smooth scrolling */
-
-html {
-  scroll-behavior: smooth;
-}
-
-
-/* =========================================
-   MOBILE
-   ========================================= */
-
-@media (max-width: 700px) {
-
-  .portfolio-section {
+@media (max-width: 1100px) {
+  .home-section {
     min-height: auto;
-
-    padding-top: 28px;
-    padding-bottom: 28px;
   }
-
 }

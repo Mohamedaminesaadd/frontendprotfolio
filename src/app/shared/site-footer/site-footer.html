@@ -1,0 +1,53 @@
+<footer class="footer">
+
+  <!-- Gooey bubbles (decorative) -->
+  <div class="bubbles" aria-hidden="true">
+    @for (bubble of bubbles; track $index) {
+      <div class="bubble" [attr.style]="bubble.style"></div>
+    }
+  </div>
+
+  <div class="content">
+
+    <div class="columns">
+      <nav class="column" aria-label="Footer: sections">
+        <b>Navigate</b>
+        @for (link of sections; track link.path) {
+          <a [routerLink]="link.path">{{ link.label }}</a>
+        }
+      </nav>
+
+      <div class="column">
+        <b>Projects</b>
+        @for (link of projects; track link.url) {
+          <a [href]="link.url" target="_blank" rel="noopener noreferrer">{{ link.label }}</a>
+        }
+      </div>
+
+      <div class="column">
+        <b>Connect</b>
+        @for (link of links; track link.url) {
+          <a [href]="link.url" [attr.target]="link.url.startsWith('mailto') ? null : '_blank'" rel="noopener noreferrer">{{ link.label }}</a>
+        }
+      </div>
+    </div>
+
+    <div class="brand">
+      <a class="mark" routerLink="/" aria-label="Back to top">MA</a>
+      <p>©{{ year }} Mohamed Amine Saad</p>
+      <p>ENIS · Sfax, Tunisia</p>
+    </div>
+
+  </div>
+
+  <!-- Gooey filter: blur, then sharpen the alpha channel -->
+  <svg class="blob-filter" aria-hidden="true" focusable="false">
+    <defs>
+      <filter id="footer-blob">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+        <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="blob" />
+      </filter>
+    </defs>
+  </svg>
+
+</footer>

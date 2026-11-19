@@ -9,6 +9,20 @@ import {
 } from '../../shared/skills-card/skills-card';
 
 
+export interface SkillCategory {
+  name: string;
+  icon: string;
+  tone: string;
+  skills: Skill[];
+  /** Projects on this page where these skills were applied. */
+  usedIn: string[];
+}
+
+
+/*
+ * Only technologies backed by the CV or by code in the public
+ * repositories are listed here.
+ */
 @Component({
   selector: 'app-skills',
   standalone: true,
@@ -26,291 +40,139 @@ import {
 })
 export class Skills {
 
-
-  /* =========================================
-     MACHINE LEARNING
-     ========================================= */
-
-  mlSkills: Skill[] = [
-
-     {
-    name: 'Python',
-    icon: 'simple-icons:python'
-  },
-
-  {
-    name: 'PyTorch',
-    icon: 'simple-icons:pytorch'
-  },
-
-  {
-    name: 'TensorFlow',
-    icon: 'simple-icons:tensorflow'
-  },
-
-  {
-    name: 'Scikit-learn',
-    icon: 'simple-icons:scikitlearn'
-  },
-
-  {
-    name: 'OpenCV',
-    icon: 'simple-icons:opencv'
-  },
-
-  {
-    name: 'YOLO',
-    icon: 'mdi:target'
-  },
-
-  {
-    name: 'Pandas',
-    icon: 'simple-icons:pandas'
-  },
-
-  {
-    name: 'NumPy',
-    icon: 'simple-icons:numpy'
-  },
-
-  {
-    name: 'Computer Vision',
-    icon: 'mdi:eye-outline'
-  },
-
-  {
-    name: 'MLOps',
-    icon: 'mdi:infinity'
-  }
-
-  ];
-
-
-  /* =========================================
-     FULL STACK
-     ========================================= */
-
-  fullStackSkills: Skill[] = [
+  readonly categories: SkillCategory[] = [
 
     {
-      name: 'FastAPI',
-      icon: 'simple-icons:fastapi'
+      name: 'AI & Machine Learning',
+      tone: 'red',
+      icon: 'mdi:brain',
+      skills: [
+        { name: 'Python', icon: 'simple-icons:python' },
+        { name: 'PyTorch', icon: 'simple-icons:pytorch' },
+        { name: 'scikit-learn', icon: 'simple-icons:scikitlearn' },
+        { name: 'XGBoost', icon: 'mdi:chart-tree' },
+        { name: 'TensorFlow', icon: 'simple-icons:tensorflow' },
+        { name: 'Pandas · NumPy', icon: 'simple-icons:pandas' },
+        { name: 'LangGraph', icon: 'mdi:graph-outline' },
+        { name: 'LangChain', icon: 'simple-icons:langchain' }
+      ],
+      usedIn: ['HPIS', 'Photovoltaic Platform', 'AI Agents Lab']
     },
 
     {
-      name: 'React',
-      icon: 'simple-icons:react'
+      name: 'Computer Vision & Deep Learning',
+      tone: 'orange',
+      icon: 'mdi:eye-outline',
+      skills: [
+        { name: 'OpenCV', icon: 'simple-icons:opencv' },
+        { name: 'MediaPipe', icon: 'mdi:human-handsup' },
+        { name: 'CNNs (1D ECG)', icon: 'mdi:layers-triple-outline' },
+        { name: 'Transformers (GPT, Donut)', icon: 'simple-icons:huggingface' },
+        { name: 'Tesseract OCR', icon: 'mdi:text-recognition' },
+        { name: 'Attention & BPE tokenizers', icon: 'mdi:brain' }
+      ],
+      usedIn: ['AI Fitness Coach', 'Invoice Data Extraction', 'LLM From Scratch', 'HPIS']
     },
 
     {
-      name: 'Angular',
-      icon: 'simple-icons:angular'
+      name: 'Cybersecurity',
+      tone: 'purple',
+      icon: 'mdi:shield-lock-outline',
+      skills: [
+        { name: 'Node monitoring', icon: 'mdi:monitor-eye' },
+        { name: 'Anomaly analysis', icon: 'mdi:chart-bell-curve' },
+        { name: 'JWT · bcrypt', icon: 'mdi:key-outline' },
+        { name: 'Helmet · rate limiting', icon: 'mdi:shield-check-outline' },
+        { name: 'Linux telemetry (/proc)', icon: 'simple-icons:linux' }
+      ],
+      usedIn: ['EVA-Guard', 'Photovoltaic Platform']
     },
 
     {
-      name: 'PostgreSQL',
-      icon: 'simple-icons:postgresql'
+      name: 'Blockchain & Ethereum',
+      tone: 'navy',
+      icon: 'simple-icons:ethereum',
+      skills: [
+        { name: 'Ethereum', icon: 'simple-icons:ethereum' },
+        { name: 'Geth · Prysm', icon: 'mdi:server-network' },
+        { name: 'Foundry · Anvil · Cast', icon: 'mdi:hammer-wrench' },
+        { name: 'Bitcoin Core (regtest)', icon: 'simple-icons:bitcoin' },
+        { name: 'Signatures & ECC', icon: 'mdi:key-chain-variant' }
+      ],
+      usedIn: ['EVA-Guard', 'Blockchain Laboratory']
     },
 
     {
-      name: 'InfluxDB',
-      icon: 'simple-icons:influxdb'
+      name: 'Backend Development',
+      tone: 'red',
+      icon: 'mdi:server-outline',
+      skills: [
+        { name: 'FastAPI', icon: 'simple-icons:fastapi' },
+        { name: 'Node.js · Express', icon: 'simple-icons:nodedotjs' },
+        { name: 'Flask', icon: 'simple-icons:flask' },
+        { name: 'REST APIs', icon: 'mdi:api' },
+        { name: 'MongoDB', icon: 'simple-icons:mongodb' },
+        { name: 'WebSockets', icon: 'mdi:access-point-network' }
+      ],
+      usedIn: ['HPIS', 'Photovoltaic Platform', 'WebSocket from Scratch']
     },
 
     {
-      name: 'Redis',
-      icon: 'simple-icons:redis'
+      name: 'Distributed Systems & Data',
+      tone: 'orange',
+      icon: 'mdi:lan',
+      skills: [
+        { name: 'Kafka', icon: 'simple-icons:apachekafka' },
+        { name: 'RabbitMQ', icon: 'simple-icons:rabbitmq' },
+        { name: 'Cassandra', icon: 'simple-icons:apachecassandra' },
+        { name: 'Redis', icon: 'simple-icons:redis' },
+        { name: 'Hadoop · HDFS', icon: 'simple-icons:apachehadoop' }
+      ],
+      usedIn: ['HPIS', 'Big Data Twitter Analysis']
     },
 
     {
-      name: 'Kafka',
-      icon: 'simple-icons:apachekafka'
+      name: 'Frontend Development',
+      tone: 'purple',
+      icon: 'mdi:monitor-dashboard',
+      skills: [
+        { name: 'Angular', icon: 'simple-icons:angular' },
+        { name: 'TypeScript', icon: 'simple-icons:typescript' },
+        { name: 'Angular Material', icon: 'mdi:material-design' },
+        { name: 'Tailwind CSS', icon: 'simple-icons:tailwindcss' },
+        { name: 'Chart.js', icon: 'simple-icons:chartdotjs' }
+      ],
+      usedIn: ['Photovoltaic Platform', 'HPIS', 'This portfolio']
     },
 
     {
-      name: 'WebSockets',
-      icon: 'mdi:access-point-network'
+      name: 'Programming Languages',
+      tone: 'navy',
+      icon: 'mdi:code-braces',
+      skills: [
+        { name: 'Python', icon: 'simple-icons:python' },
+        { name: 'Rust', icon: 'simple-icons:rust' },
+        { name: 'TypeScript', icon: 'simple-icons:typescript' },
+        { name: 'JavaScript', icon: 'simple-icons:javascript' },
+        { name: 'C++', icon: 'simple-icons:cplusplus' },
+        { name: 'Java', icon: 'mdi:language-java' },
+        { name: 'SQL', icon: 'mdi:database-outline' }
+      ],
+      usedIn: ['EVA-Guard (Rust)', 'HPIS (Python, C++ firmware)']
     },
 
     {
-      name: 'Docker',
-      icon: 'simple-icons:docker'
-    },
-
-    {
-      name: 'Kubernetes',
-      icon: 'simple-icons:kubernetes'
-    },
-
-    {
-      name: 'CI/CD',
-      icon: 'mdi:infinity'
-    }
-
-  ];
-
-
-  /* =========================================
-     AI AGENTS & GENERATIVE AI
-     ========================================= */
-
-  aiAgentSkills: Skill[] = [
-
-    {
-      name: 'LangChain',
-      icon: 'simple-icons:langchain'
-    },
-
-    {
-      name: 'CrewAI',
-      icon: 'mdi:robot-outline'
-    },
-
-    {
-      name: 'RAG',
-      icon: 'mdi:database-search'
-    },
-
-    {
-      name: 'LLM',
-      icon: 'mdi:brain'
-    },
-
-    {
-      name: 'n8n',
-      icon: 'simple-icons:n8n'
-    },
-
-    {
-      name: 'AI Agents',
-      icon: 'mdi:robot'
-    }
-
-  ];
-
-
-  /* =========================================
-     EMBEDDED LINUX
-     ========================================= */
-
-  embeddedSkills: Skill[] = [
-
-    {
-      name: 'Linux',
-      icon: 'simple-icons:linux'
-    },
-
-    {
-      name: 'U-Boot',
-      icon: 'mdi:chip'
-    },
-
-    {
-      name: 'Buildroot',
-      icon: 'mdi:package-variant'
-    },
-
-    {
-      name: 'Yocto Project',
-      icon: 'mdi:linux'
-    },
-
-    {
-      name: 'Device Tree',
-      icon: 'mdi:file-tree'
-    },
-
-    {
-      name: 'Cross Compilation',
-      icon: 'mdi:tools'
-    }
-
-  ];
-
-
-  /* =========================================
-     SECURITY ENGINEERING
-     ========================================= */
-
-  securitySkills: Skill[] = [
-
-    {
-      name: 'Wazuh',
-      icon: 'mdi:shield-check'
-    },
-
-    {
-      name: 'Suricata',
-      icon: 'mdi:shield-search'
-    },
-
-    {
-      name: 'Zeek',
-      icon: 'mdi:network'
-    },
-
-    {
-      name: 'ELK Stack',
-      icon: 'simple-icons:elastic'
-    },
-
-    {
-      name: 'SIEM',
-      icon: 'mdi:security'
-    },
-
-    {
-      name: 'Threat Detection',
-      icon: 'mdi:alert-shield'
-    },
-
-    {
-      name: 'Log Analysis',
-      icon: 'mdi:file-search'
-    }
-
-  ];
-
-
-  /* =========================================
-     ENGINEERING
-     ========================================= */
-
-  engineeringSkills: Skill[] = [
-
-    {
-      name: 'Git',
-      icon: 'simple-icons:git'
-    },
-
-    {
-      name: 'GitHub',
-      icon: 'simple-icons:github'
-    },
-
-    {
-      name: 'GitHub Actions',
-      icon: 'simple-icons:githubactions'
-    },
-
-    {
-      name: 'Jira',
-      icon: 'simple-icons:jira'
-    },
-
-    {
-      name: 'Docker',
-      icon: 'simple-icons:docker'
-    },
-
-    {
-      name: 'Agile / Scrum',
-      icon: 'mdi:sync'
-    },
-
-    {
-      name: 'CI/CD',
-      icon: 'mdi:infinity'
+      name: 'DevOps & Tools',
+      tone: 'red',
+      icon: 'mdi:tools',
+      skills: [
+        { name: 'Docker · Compose', icon: 'simple-icons:docker' },
+        { name: 'Linux · SSH', icon: 'simple-icons:linux' },
+        { name: 'Git · GitHub', icon: 'simple-icons:github' },
+        { name: 'Jupyter', icon: 'simple-icons:jupyter' },
+        { name: 'LaTeX', icon: 'simple-icons:latex' }
+      ],
+      usedIn: ['HPIS', 'EVA-Guard']
     }
 
   ];

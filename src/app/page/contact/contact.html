@@ -1,277 +1,120 @@
-<section class="section contact-section">
+<section class="contact-section">
 
-  <div class="section-inner">
-
-    <!-- HEADER -->
-
-    <div class="section-header">
-
-
-      <p class="section-description">
-        Have a project, idea or opportunity?
-        Let's build something intelligent.
-      </p>
-
-    </div>
+  <div class="section-header">
+    <p class="section-eyebrow"><span class="step active">5</span> Contact</p>
+    <h2 class="section-title">Let's talk</h2>
+    <p class="section-description">
+      Have an internship opportunity, a project or a question? Write to me directly.
+    </p>
+  </div>
 
 
-    <!-- CONTACT CONTENT -->
+  <div class="contact-container">
 
-    <div class="contact-container">
+    <!-- =========================================
+         CONTACT DETAILS
+    ========================================== -->
 
-      <!-- =========================================
-           TERMINAL INFORMATION
-      ========================================== -->
+    <article class="contact-info card">
 
-      <div class="contact-terminal">
+      <header class="card-head">
+        <h3 class="fs-title">Get in touch</h3>
+        <p class="fs-subtitle">I usually reply within a few days</p>
+      </header>
 
-        <div class="terminal-header">
-
-          <div class="terminal-dots">
-            <span class="dot red"></span>
-            <span class="dot yellow"></span>
-            <span class="dot green"></span>
-          </div>
-
-          <span class="terminal-title">
-            ~/contact - bash
+      <ul class="contact-list">
+        <li>
+          <span class="contact-icon tone-red" aria-hidden="true"><iconify-icon icon="mdi:email-outline"></iconify-icon></span>
+          <span class="contact-text">
+            <span class="info-label">Email</span>
+            <a class="info-value" [href]="'mailto:' + email">{{ email }}</a>
           </span>
+        </li>
+        <li>
+          <span class="contact-icon tone-navy" aria-hidden="true"><iconify-icon icon="mdi:github"></iconify-icon></span>
+          <span class="contact-text">
+            <span class="info-label">GitHub</span>
+            <a class="info-value" href="https://github.com/Mohamedaminesaadd" target="_blank" rel="noopener noreferrer">github.com/Mohamedaminesaadd</a>
+          </span>
+        </li>
+        <li>
+          <span class="contact-icon tone-purple" aria-hidden="true"><iconify-icon icon="mdi:linkedin"></iconify-icon></span>
+          <span class="contact-text">
+            <span class="info-label">LinkedIn</span>
+            <a class="info-value" href="https://www.linkedin.com/in/mohamed-amine-50956b296/" target="_blank" rel="noopener noreferrer">linkedin.com/in/mohamed-amine-50956b296</a>
+          </span>
+        </li>
+        <li>
+          <span class="contact-icon tone-orange" aria-hidden="true"><iconify-icon icon="simple-icons:huggingface"></iconify-icon></span>
+          <span class="contact-text">
+            <span class="info-label">Hugging Face</span>
+            <a class="info-value" href="https://huggingface.co/moahmedamine" target="_blank" rel="noopener noreferrer">huggingface.co/moahmedamine</a>
+          </span>
+        </li>
+      </ul>
 
-        </div>
-
-
-        <div class="terminal-body">
-
-          <div class="terminal-line">
-
-            <span class="prompt">
-              $
-            </span>
-
-            <span>
-              contact --info
-            </span>
-
-          </div>
-
-
-          <div class="terminal-output">
-
-            <!-- EMAIL -->
-
-            <div class="contact-info-item">
-
-              <span class="info-label">
-                email
-              </span>
-
-              <a
-                href="mailto:meadaminee2002@gmail.com"
-                class="info-value"
-              >
-                meadaminee2002@gmail.com
-              </a>
-
-            </div>
+    </article>
 
 
-            <!-- GITHUB -->
+    <!-- =========================================
+         MESSAGE FORM — reference form style
+    ========================================== -->
 
-            <div class="contact-info-item">
+    <article class="contact-form-card card">
 
-              <span class="info-label">
-                github
-              </span>
+      <header class="card-head">
+        <h3 class="fs-title">Send a message</h3>
+        <p class="fs-subtitle">Opens your email app with the message ready to send</p>
+      </header>
 
-              <a
-                href="https://github.com/Mohamedaminesaadd"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="info-value"
-              >
-                github.com/Mohamedaminesaadd
-              </a>
+      <form (ngSubmit)="sendMessage()" #contactForm="ngForm">
 
-            </div>
+        <label class="sr-only" for="name">Your name</label>
+        <input
+          id="name"
+          name="name"
+          type="text"
+          [(ngModel)]="contact.name"
+          placeholder="Your name"
+          autocomplete="name"
+          required
+        />
 
+        <label class="sr-only" for="email">Your email</label>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          [(ngModel)]="contact.email"
+          placeholder="Your email"
+          autocomplete="email"
+          required
+          email
+        />
 
-            <!-- LINKEDIN -->
+        <label class="sr-only" for="message">Your message</label>
+        <textarea
+          id="message"
+          name="message"
+          [(ngModel)]="contact.message"
+          placeholder="Your message"
+          rows="5"
+          required
+        ></textarea>
 
-            <div class="contact-info-item">
-
-              <span class="info-label">
-                linkedin
-              </span>
-
-              <a
-                href="https://www.linkedin.com/in/mohamed-amine-50956b296/"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="info-value"
-              >
-                linkedin.com/in/mohamed-amine-50956b296
-              </a>
-
-            </div>
-
-
-            <!-- HUGGING FACE -->
-
-            <div class="contact-info-item">
-
-              <span class="info-label">
-                huggingface
-              </span>
-
-              <a
-                href="https://huggingface.co/moahmedamine"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="info-value"
-              >
-                huggingface.co/moahmedamine
-              </a>
-
-            </div>
-
-          </div>
-
-
-          <!-- FINAL COMMAND -->
-
-          <div class="terminal-line final-command">
-
-            <span class="prompt">
-              $
-            </span>
-
-            <span>
-              ready_to_build<span class="cursor">_</span>
-            </span>
-
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <!-- =========================================
-           CONTACT FORM
-      ========================================== -->
-
-      <div class="contact-form-card">
-
-        <div class="form-header">
-
-          <div class="form-icon">
-            &lt;/&gt;
-          </div>
-
-          <div>
-
-            <h3>
-              Send a message
-            </h3>
-
-            <span>
-              Let's start a conversation
-            </span>
-
-          </div>
-
-        </div>
-
-
-        <form
-          (ngSubmit)="sendMessage()"
-          #contactForm="ngForm"
+        <button
+          type="submit"
+          class="btn btn-primary submit-button"
+          [disabled]="contactForm.invalid"
         >
+          Send
+        </button>
 
-          <!-- NAME -->
+      </form>
 
-          <div class="form-group">
-
-            <label for="name">
-              name
-            </label>
-
-            <input
-              id="name"
-              name="name"
-              type="text"
-              [(ngModel)]="contact.name"
-              placeholder="Your name"
-              required
-            />
-
-          </div>
-
-
-          <!-- EMAIL -->
-
-          <div class="form-group">
-
-            <label for="email">
-              email
-            </label>
-
-            <input
-              id="email"
-              name="email"
-              type="email"
-              [(ngModel)]="contact.email"
-              placeholder="you@example.com"
-              required
-            />
-
-          </div>
-
-
-          <!-- MESSAGE -->
-
-          <div class="form-group">
-
-            <label for="message">
-              message
-            </label>
-
-            <textarea
-              id="message"
-              name="message"
-              [(ngModel)]="contact.message"
-              placeholder="Tell me about your project..."
-              rows="6"
-              required
-            ></textarea>
-
-          </div>
-
-
-          <!-- SUBMIT -->
-
-          <button
-            type="submit"
-            class="submit-button"
-            [disabled]="contactForm.invalid"
-          >
-
-            <span>
-              ./send_message
-            </span>
-
-            <span class="button-arrow">
-              →
-            </span>
-
-          </button>
-
-        </form>
-
-      </div>
-
-    </div>
+    </article>
 
   </div>
+
 
 </section>

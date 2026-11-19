@@ -1,5 +1,15 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 
+interface ProfileField {
+  label: string;
+  value: string;
+  wide?: boolean;
+}
+
+/**
+ * Profile facts card (formerly the developer.ts editor).
+ * Every value comes from the CV.
+ */
 @Component({
   selector: 'app-code-editor',
   standalone: true,
@@ -8,13 +18,14 @@ import { Component, Input } from '@angular/core';
 })
 export class Editor {
 
- @Input() developer = {
-  name: 'Mohamed Amine Saad',
-  role: 'AI Engineer & Software Engineer',
-  education: 'Computer Engineering Student at ENIS',
-  focus: 'Edge AI, Embedded Systems, Software Engineering & Intelligent Systems',
-  location: 'Tunisia',
-  passion: 'Building intelligent systems, AI agents, robotics and open-source technology'
-};
+  readonly fields: ProfileField[] = [
+    { label: 'Role', value: 'Final-year Computer Engineering student', wide: true },
+    { label: 'School', value: 'ENIS — École Nationale d\'Ingénieurs de Sfax', wide: true },
+    { label: 'Graduation', value: 'Expected 2027' },
+    { label: 'Location', value: 'Sfax, Tunisia' },
+    { label: 'Focus', value: 'Cybersecurity · Distributed systems · AI for security', wide: true },
+    { label: 'Looking for', value: 'End-of-studies (PFE) internship in cybersecurity', wide: true },
+    { label: 'Languages', value: 'Arabic (native) · French · English', wide: true }
+  ];
 
 }

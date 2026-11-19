@@ -3,13 +3,16 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  Input,
   OnDestroy,
+  PLATFORM_ID,
   OnInit,
   ViewChild,
   inject
 } from '@angular/core';
 
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
@@ -30,6 +33,7 @@ import { MessageComponent } from '../message/message';
   imports: [
     CommonModule,
     FormsModule,
+    RouterLink,
     MessageComponent
   ],
 
@@ -49,6 +53,26 @@ export class Chat
 
   private readonly cdr =
     inject(ChangeDetectorRef);
+
+  /**
+   * localStorage / crypto only exist in the browser. The app is
+   * server-rendered, so every storage access is guarded.
+   */
+  private readonly isBrowser =
+    isPlatformBrowser(inject(PLATFORM_ID));
+
+
+  // ============================================================
+  // INPUTS
+  // ============================================================
+
+  /** Compact version shown inside the homepage hero. */
+  @Input()
+  embedded = false;
+
+  get inputId(): string {
+    return this.embedded ? 'home-chat-message' : 'chat-message';
+  }
 
 
   // ============================================================
@@ -149,14 +173,24 @@ export class Chat
 
   private getOrCreateThreadId(): string {
 
+    if (!this.isBrowser) {
+      return 'ssr-session';
+    }
+
     /**
      * Check whether this browser already has a conversation.
      */
 
-    const existingThreadId =
-      localStorage.getItem(
-        this.THREAD_STORAGE_KEY
-      );
+    let existingThreadId: string | null = null;
+
+    try {
+      existingThreadId =
+        localStorage.getItem(
+          this.THREAD_STORAGE_KEY
+        );
+    } catch {
+      // Storage blocked (private mode): fall back to an in-memory thread.
+    }
 
     if (
       existingThreadId &&
@@ -180,13 +214,32 @@ export class Chat
      * Persist it for this browser.
      */
 
-    localStorage.setItem(
-      this.THREAD_STORAGE_KEY,
-      newThreadId
-    );
+    this.persistThreadId(newThreadId);
 
 
     return newThreadId;
+  }
+
+
+  // ============================================================
+  // PERSIST THREAD ID
+  // ============================================================
+
+  private persistThreadId(threadId: string): void {
+
+    if (!this.isBrowser) {
+      return;
+    }
+
+    try {
+      localStorage.setItem(
+        this.THREAD_STORAGE_KEY,
+        threadId
+      );
+    } catch {
+      // Storage blocked: the conversation still works for this visit.
+    }
+
   }
 
 
@@ -487,10 +540,7 @@ export class Chat
                * Persist the backend thread ID.
                */
 
-              localStorage.setItem(
-                this.THREAD_STORAGE_KEY,
-                this.threadId
-              );
+              this.persistThreadId(this.threadId);
 
             }
 
@@ -715,6 +765,10 @@ export class Chat
     // CREATE NEW UNIQUE THREAD
     // ----------------------------------------------------------
 
+    if (!this.isBrowser) {
+      return;
+    }
+
     this.threadId =
       `amine-${crypto.randomUUID()}`;
 
@@ -723,10 +777,7 @@ export class Chat
     // SAVE NEW THREAD
     // ----------------------------------------------------------
 
-    localStorage.setItem(
-      this.THREAD_STORAGE_KEY,
-      this.threadId
-    );
+    this.persistThreadId(this.threadId);
 
 
     // ----------------------------------------------------------

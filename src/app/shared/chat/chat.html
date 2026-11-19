@@ -1,8 +1,58 @@
-<section class="chat-page" aria-labelledby="chat-title">
+<section class="chat-page" [class.embedded]="embedded" aria-labelledby="chat-title">
   <div class="chat-container">
-    <header class="chat-header"><div><p class="chat-eyebrow"><span class="status-dot"></span> online</p><h1 id="chat-title">AI ASSISTANT</h1><p>AI Portfolio Assistant</p></div><button type="button" class="new-chat-button" (click)="newConversation()" [disabled]="isTyping" aria-label="Start a new chat">+ new chat</button></header>
-    <div #chatMessages class="chat-messages" aria-live="polite" aria-label="Conversation"><div class="messages-container">@for (message of messages; track message.id) { <app-message [message]="message"></app-message> } @if (isTyping) { <div class="typing-indicator" aria-label="Assistant is typing"><span></span><span></span><span></span></div> } @if (error) { <p class="error-message" role="alert">{{ error }}</p> }</div></div>
-    @if (messages.length === 1 && !isTyping) { <div class="suggestions" aria-label="Suggested questions"><span>Try asking:</span>@for (question of suggestedQuestions; track question) { <button type="button" (click)="sendSuggested(question)">{{ question }}</button> }</div> }
-    <form class="chat-input-area" (ngSubmit)="sendMessage()"><label class="sr-only" for="chat-message">Ask the assistant a question</label><div class="input-wrapper"><textarea #messageInput id="chat-message" class="chat-input" name="message" [(ngModel)]="newMessage" (keydown)="handleKeyPress($event)" (input)="autoResize($event)" placeholder="Ask me something..." rows="1" [disabled]="isTyping"></textarea><button type="submit" class="send-button" [disabled]="!newMessage.trim() || isTyping" aria-label="Send message">→</button></div><small>Enter to send · Shift + Enter for a new line</small></form>
+
+    <header class="chat-header">
+      <div class="chat-header-main">
+        <span class="chat-avatar" aria-hidden="true">AI</span>
+        <div>
+          @if (embedded) {
+            <h2 id="chat-title" class="fs-title">Ask AI about Amine</h2>
+          } @else {
+            <h1 id="chat-title" class="fs-title">AI Assistant</h1>
+          }
+          <p class="chat-subtitle"><span class="status-dot"></span> Online · projects, skills, education, GitHub</p>
+        </div>
+      </div>
+
+      <div class="chat-header-actions">
+        <button type="button" class="btn btn-secondary btn-sm new-chat-button" (click)="newConversation()" [disabled]="isTyping" aria-label="Start a new chat">+ new chat</button>
+        @if (embedded) {
+          <a class="btn btn-secondary btn-sm expand-link" routerLink="/chat" aria-label="Open the assistant in full screen">⤢ <span>full screen</span></a>
+        }
+      </div>
+    </header>
+
+    <div #chatMessages class="chat-messages" aria-live="polite" aria-label="Conversation">
+      <div class="messages-container">
+        @for (message of messages; track message.id) {
+          <app-message [message]="message"></app-message>
+        }
+        @if (isTyping) {
+          <div class="typing-indicator" aria-label="Assistant is typing"><span></span><span></span><span></span></div>
+        }
+        @if (error) {
+          <p class="error-message" role="alert">{{ error }}</p>
+        }
+      </div>
+    </div>
+
+    @if (messages.length === 1 && !isTyping) {
+      <div class="suggestions" aria-label="Suggested questions">
+        <span>Try asking:</span>
+        @for (question of suggestedQuestions; track question) {
+          <button type="button" (click)="sendSuggested(question)">{{ question }}</button>
+        }
+      </div>
+    }
+
+    <form class="chat-input-area" (ngSubmit)="sendMessage()">
+      <label class="sr-only" [attr.for]="inputId">Ask the assistant a question</label>
+      <div class="input-wrapper">
+        <textarea #messageInput [id]="inputId" class="chat-input" name="message" [(ngModel)]="newMessage" (keydown)="handleKeyPress($event)" (input)="autoResize($event)" placeholder="Ask me something about Amine..." rows="1" [disabled]="isTyping"></textarea>
+        <button type="submit" class="btn btn-primary send-button" [disabled]="!newMessage.trim() || isTyping" aria-label="Send message">Send</button>
+      </div>
+      <small>Enter to send · Shift + Enter for a new line</small>
+    </form>
+
   </div>
 </section>

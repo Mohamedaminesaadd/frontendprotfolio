@@ -4,8 +4,6 @@ import {
   CUSTOM_ELEMENTS_SCHEMA
 } from '@angular/core';
 
-import { CommonModule } from '@angular/common';
-
 export interface Skill {
   name: string;
   icon: string;
@@ -14,7 +12,6 @@ export interface Skill {
 @Component({
   selector: 'app-skills-card',
   standalone: true,
-  imports: [CommonModule],
   templateUrl: './skills-card.html',
   styleUrl: './skills-card.css',
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
@@ -29,4 +26,12 @@ export class SkillsCard {
 
   @Input({ required: true })
   skills: Skill[] = [];
+
+  /** Projects where these skills were applied. */
+  @Input()
+  usedIn: string[] = [];
+
+  /** Color tone of the card (emerald, indigo, sky, amber, rose, violet). */
+  @Input()
+  tone = 'emerald';
 }

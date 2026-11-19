@@ -5,9 +5,8 @@ import {
 
 import { RouterOutlet } from '@angular/router';
 
-import { MatrixBackground } from './components/matrix-back/matrix-back';
-import { ParticleBackground } from './components/partile-background/partile-background';
 import { Navbar } from './shared/navbar/navbar';
+import { StarField } from './components/star-field/star-field';
 
 @Component({
   selector: 'app-root',
@@ -15,9 +14,8 @@ import { Navbar } from './shared/navbar/navbar';
 
   imports: [
     RouterOutlet,
-    MatrixBackground,
-    ParticleBackground,
-    Navbar
+    Navbar,
+    StarField
   ],
 
   schemas: [

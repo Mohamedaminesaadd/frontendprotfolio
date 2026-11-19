@@ -12,124 +12,80 @@
   position: relative;
 
   width: 100%;
-  max-width: 1500px;
+  max-width: 1180px;
 
   margin: 0 auto;
-  padding: 100px 6vw;
+  padding: 56px 40px;
 
   box-sizing: border-box;
 }
 
 
 /* =========================================
-   SECTION HEADER
+   GROUPS
    ========================================= */
 
-.section-header {
-  margin-bottom: 50px;
-
-  text-align: center;
-}
-
-
-/* Small terminal-style comment */
-
-.section-comment {
-  display: inline-flex;
-
-  align-items: center;
-  gap: 8px;
-
-  margin-bottom: 12px;
-
-  font-family: 'Fira Code', 'JetBrains Mono', monospace;
-  font-size: 0.9rem;
-
-  color: #00ff41;
-
-  letter-spacing: 0.5px;
-}
-
-.section-comment iconify-icon {
-  font-size: 18px;
+.project-group + .project-group {
+  margin-top: 56px;
 }
 
 
 /* =========================================
-   TITLE
-   ========================================= */
-
-.section-title {
-  margin: 0;
-
-  font-family:
-    'Fira Code',
-    'JetBrains Mono',
-    'Cascadia Code',
-    monospace;
-
-  font-size: clamp(2rem, 4vw, 3.5rem);
-
-  font-weight: 700;
-
-  color: #ffffff;
-
-  letter-spacing: -1px;
-}
-
-.section-title span {
-  color: #00d4ff;
-}
-
-
-/* =========================================
-   DESCRIPTION
-   ========================================= */
-
-.section-description {
-  max-width: 700px;
-
-  margin: 18px auto 0;
-
-  font-family:
-    'Fira Code',
-    'JetBrains Mono',
-    monospace;
-
-  font-size: 0.95rem;
-
-  line-height: 1.7;
-
-  color: rgba(255, 255, 255, 0.55);
-}
-
-
-/* =========================================
-   PROJECT GRID
+   GRIDS
    ========================================= */
 
 .projects-grid {
   display: grid;
-
-  grid-template-columns:
-    repeat(2, minmax(0, 1fr));
-
-  gap: 28px;
-
+  gap: 24px;
   width: 100%;
+}
+
+.projects-grid app-project-cart {
+  min-width: 0;
+}
+
+.projects-grid.single {
+  grid-template-columns: 1fr;
+}
+
+/* Featured: the project with a video spans the full row */
+.projects-grid.featured {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.projects-grid.featured app-project-cart.span-2 {
+  grid-column: 1 / -1;
+}
+
+.projects-grid.three {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.projects-grid.two {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 
 /* =========================================
-   PROJECT CARD
+   MORE LINK
    ========================================= */
 
-.projects-grid app-project-cart {
-  display: block;
+.projects-more {
+  margin: 40px 0 0;
 
-  min-width: 0;
+  color: var(--text-2);
+  font-size: 0.85rem;
+  text-align: center;
+}
 
-  height: 100%;
+.projects-more a {
+  color: var(--navy);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.projects-more a:hover {
+  text-decoration: underline;
 }
 
 
@@ -137,39 +93,39 @@
    RESPONSIVE
    ========================================= */
 
-@media (max-width: 1000px) {
-
-  .projects-section {
-    padding: 80px 5vw;
-  }
-
-  .projects-grid {
-    grid-template-columns: 1fr;
-
-    gap: 24px;
+@media (max-width: 1100px) {
+  .projects-grid.three {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-
-@media (max-width: 600px) {
-
+@media (max-width: 900px) {
   .projects-section {
-    padding: 70px 20px;
+    padding: 72px 5vw;
   }
 
-  .section-header {
-    margin-bottom: 35px;
-  }
-
-  .section-title {
-    font-size: 2rem;
-  }
-
-  .section-description {
-    font-size: 0.82rem;
+  .projects-grid.featured,
+  .projects-grid.three {
+    grid-template-columns: 1fr;
   }
 
   .projects-grid {
     gap: 20px;
+  }
+}
+
+@media (max-width: 560px) {
+  .projects-grid.two {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .projects-section {
+    padding: 48px 12px;
+  }
+
+  .project-group + .project-group {
+    margin-top: 44px;
   }
 }

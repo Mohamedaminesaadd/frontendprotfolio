@@ -1,37 +1,89 @@
 <section class="projects-section">
 
   <div class="section-header">
-    <span class="section-comment">
-      <iconify-icon icon="solar:case-round-bold"></iconify-icon>
-      my projects
-    </span>
-
-    <h2 class="section-title">
-      Projects<span>{{ '{' }}</span>
-    </h2>
-
+    <p class="section-eyebrow"><span class="step active">3</span> Projects</p>
+    <h2 class="section-title">What I build</h2>
     <p class="section-description">
-      A selection of projects built with modern technologies,
-      AI, backend systems, and cloud infrastructure.
+      What I'm building now, what I've shipped, and what I'm learning.
     </p>
   </div>
 
 
-  <div class="projects-grid">
+  <!-- ==========================================
+       CURRENTLY WORKING ON
+  =========================================== -->
 
-    <app-project-cart
-      *ngFor="let project of projects"
+  <div class="project-group" aria-labelledby="group-current">
+    <div class="group-heading">
+      <h3 id="group-current">Currently Working On</h3>
+    </div>
 
-      [fileName]="project.fileName"
-      [fileIcon]="project.fileIcon"
-      [tags]="project.tags"
-      [liveUrl]="project.liveUrl"
-      [codeUrl]="project.codeUrl">
-
-      <span [innerHTML]="project.code"></span>
-
-    </app-project-cart>
-
+    <div class="projects-grid single">
+      @for (project of current; track project.id) {
+        <app-project-cart [project]="project" variant="wide"></app-project-cart>
+      }
+    </div>
   </div>
+
+
+  <!-- ==========================================
+       FEATURED PROJECTS
+  =========================================== -->
+
+  <div class="project-group" aria-labelledby="group-featured">
+    <div class="group-heading">
+      <h3 id="group-featured">Featured Projects</h3>
+    </div>
+
+    <div class="projects-grid featured">
+      @for (project of featured; track project.id) {
+        <app-project-cart
+          [project]="project"
+          variant="large"
+          [class.span-2]="!!project.video"
+        ></app-project-cart>
+      }
+    </div>
+  </div>
+
+
+  <!-- ==========================================
+       OTHER TECHNICAL PROJECTS
+  =========================================== -->
+
+  <div class="project-group" aria-labelledby="group-other">
+    <div class="group-heading">
+      <h3 id="group-other">Other Technical Projects</h3>
+    </div>
+
+    <div class="projects-grid three">
+      @for (project of other; track project.id) {
+        <app-project-cart [project]="project" variant="compact"></app-project-cart>
+      }
+    </div>
+  </div>
+
+
+  <!-- ==========================================
+       RESEARCH & LEARNING
+  =========================================== -->
+
+  <div class="project-group" aria-labelledby="group-learning">
+    <div class="group-heading">
+      <h3 id="group-learning">Research &amp; Learning</h3>
+    </div>
+
+    <div class="projects-grid two">
+      @for (project of learning; track project.id) {
+        <app-project-cart [project]="project" variant="compact"></app-project-cart>
+      }
+    </div>
+  </div>
+
+
+  <p class="projects-more">
+    More on
+    <a href="https://github.com/Mohamedaminesaadd" target="_blank" rel="noopener noreferrer">github.com/Mohamedaminesaadd ↗</a>
+  </p>
 
 </section>

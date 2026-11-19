@@ -1,36 +1,49 @@
 <section class="about-section">
 
-  <!-- LEFT: Editor -->
+  <!-- HEADER -->
+  <div class="section-header">
+    <p class="section-eyebrow"><span class="step active">2</span> About me</p>
+    <h2 class="section-title">Who I am</h2>
+    <p class="section-description">
+      A Computer Engineering student building secure, intelligent and distributed systems.
+    </p>
+  </div>
+
+  <!-- LEFT: Profile -->
   <div class="about-editor">
     <app-code-editor></app-code-editor>
   </div>
 
-  <!-- RIGHT: About Terminal -->
+  <!-- RIGHT: Certificates -->
   <div class="about-terminal">
     <app-about-terminal></app-about-terminal>
   </div>
 
-  <!-- STATS -->
+  <!-- QUICK FACTS (all from the CV) -->
   <div class="stats-grid">
 
     <app-stat-card
-      value="15+"
-      label="Projects"
+      value="ENIS"
+      label="Computer Engineering"
+      tone="red"
     ></app-stat-card>
 
     <app-stat-card
-      value="10+"
-      label="Technologies"
+      value="2027"
+      label="Expected graduation"
+      tone="orange"
     ></app-stat-card>
 
     <app-stat-card
-      value="3+"
-      label="Years Learning"
+      value="3"
+      label="Verified certificates"
+      tone="purple"
     ></app-stat-card>
 
     <app-stat-card
-      value="∞"
-      label="Curiosity"
+      value="AR · FR · EN"
+      label="Languages"
+      tone="navy"
     ></app-stat-card>
 
   </div>

@@ -1,150 +1,61 @@
-/* =========================================================
-   CODE EDITOR
-========================================================= */
-
-.code-editor {
-  overflow: hidden;
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg);
-  background: var(--bg-secondary);
-  box-shadow: var(--shadow-card);
+:host {
+  display: block;
+  height: 100%;
 }
 
-
-/* =========================================================
-   EDITOR HEADER
-========================================================= */
-
-.editor-header {
-  display: flex;
-  align-items: center;
-  padding: 11px 15px;
-  background-color: #000000;
-  border-bottom: 1px solid var(--border-color);
+.profile {
+  height: 100%;
+  padding: 28px 28px 24px;
 }
 
-
-/* =========================================================
-   EDITOR DOTS
-========================================================= */
-
-.editor-dots {
-  display: flex;
-  gap: 6px;
-  margin-right: 14px;
+.card-head {
+  margin-bottom: 20px;
+  text-align: center;
 }
 
-.editor-dots span {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: var(--text-dim);
+/* Read-only "form fields", echoing the reference inputs */
+.fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 0;
 }
 
-.editor-dots span:nth-child(1) {
-  background: #ff5f56;
+.field {
+  min-width: 0;
+  padding: 10px 14px 11px;
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-subtle);
 }
 
-.editor-dots span:nth-child(2) {
-  background: #ffbd2e;
+.field.wide {
+  grid-column: 1 / -1;
 }
 
-.editor-dots span:nth-child(3) {
-  background: #27c93f;
+.field dt {
+  color: var(--text-3);
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
-
-/* =========================================================
-   EDITOR TITLE
-========================================================= */
-
-.editor-title {
-  color: var(--text-secondary);
-  font-size: 0.72rem;
+.field dd {
+  margin: 3px 0 0;
+  color: var(--navy);
+  font-size: 0.9rem;
+  font-weight: 500;
+  line-height: 1.45;
 }
-
-
-/* =========================================================
-   EDITOR BODY
-========================================================= */
-
-.editor-body {
-  padding: 25px 20px;
-  overflow-x: auto;
-  font-size: clamp(0.68rem, 1.2vw, 0.82rem);
-  line-height: 2;
-  background-color: #1e1e1e; /* Dark background like VS Code */
-}
-
-
-/* =========================================================
-   CODE ROW
-========================================================= */
-
-.code-row {
-  display: flex;
-  min-width: max-content;
-}
-
-
-/* =========================================================
-   LINE NUMBER
-========================================================= */
-
-.line-number {
-  width: 35px;
-  margin-right: 18px;
-  color: var(--text-dim);
-  user-select: none;
-  text-align: right;
-}
-
-
-/* =========================================================
-   BRACES
-========================================================= */
-
-.code-brace-open::before {
-  content: '{';
-}
-
-.code-brace-close::before {
-  content: '}';
-}
-
-
-/* =========================================================
-   CODE COLORS - VS Code Dark+ Theme
-========================================================= */
-
-/* Keywords: const, let, etc. */
-.keyword {
-  color: #ff7b72; /* Salmon/red */
-}
-
-/* Variables: developer, user, etc. */
-.variable {
-  color: #79b8ff; /* Light blue */
-}
-
-/* Properties: name, brand, etc. */
-.property {
-  color: #7ee787; /* Green */
-}
-
-/* Strings: "John Doe", "Google", etc. */
-.string {
-  color: #e1e4e8; /* Off-white/light gray */
-}
-
-
-/* =========================================================
-   RESPONSIVE
-========================================================= */
 
 @media (max-width: 600px) {
-  .editor-body {
-    padding: 20px 14px;
-    font-size: 0.65rem;
+  .profile {
+    padding: 22px 16px 18px;
+  }
+
+  .fields {
+    grid-template-columns: 1fr;
   }
 }
